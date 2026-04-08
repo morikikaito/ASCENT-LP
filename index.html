@@ -1354,6 +1354,46 @@ footer {
 .roadmap-status-badge.active{border-color:#C9A84C;color:#C9A84C;}
 .roadmap-note{font-size:13px;color:rgba(245,240,232,0.55);max-width:440px;margin:0 auto;line-height:1.8;font-style:italic;}
 @media(max-width:600px){.roadmap-grid{grid-template-columns:1fr;}}
+/* ===== Empathy Section ===== */
+.empathy-section{background:#0A0A14;padding:64px 20px;text-align:center;}
+.empathy-title{font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.25em;color:#C9A84C;margin:0 0 32px;}
+.empathy-voice{max-width:520px;margin:0 auto 24px;padding:24px 28px;background:#13131F;border-left:3px solid rgba(201,168,76,0.4);text-align:left;font-size:14px;color:rgba(245,240,232,0.75);line-height:1.85;}
+.empathy-closer{font-size:16px;font-weight:700;color:#F5F0E8;margin:32px 0 0;letter-spacing:0.05em;}
+/* ===== Hero Journey ===== */
+.hero-journey{background:#050507;padding:64px 20px;text-align:center;max-width:600px;margin:0 auto;}
+.hero-journey h2{font-size:20px;font-weight:700;color:#F5F0E8;margin:0 0 32px;}
+.hero-journey-body{font-size:14px;color:rgba(245,240,232,0.7);line-height:2.2;margin:0 0 32px;white-space:pre-line;}
+.hero-journey-sig{font-size:12px;color:#C9A84C;letter-spacing:0.08em;}
+/* ===== Section CTA Block ===== */
+.section-cta{text-align:center;padding:40px 20px 48px;}
+.section-cta-context{font-size:13px;color:rgba(245,240,232,0.5);margin:0 0 16px;letter-spacing:0.03em;}
+.section-cta .btn-cta-main{margin:0 auto 8px;}
+/* ===== Testimonial Voice ===== */
+.testimonial-voices{max-width:520px;margin:0 auto;padding:0 20px;}
+.testimonial-voices h3{font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.25em;color:#C9A84C;text-align:center;margin:0 0 24px;}
+.voice-card{padding:20px 24px;background:#13131F;border-left:3px solid rgba(201,168,76,0.4);margin-bottom:16px;font-size:14px;color:rgba(245,240,232,0.75);line-height:1.85;}
+/* ===== Value Stack ===== */
+.value-stack{background:#0A0A14;padding:64px 20px;text-align:center;}
+.value-stack h2{font-size:18px;font-weight:700;color:#F5F0E8;margin:0 0 32px;line-height:1.6;}
+.value-table{max-width:480px;margin:0 auto 32px;text-align:left;}
+.value-row{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(245,240,232,0.08);font-size:13px;color:rgba(245,240,232,0.7);}
+.value-row .item{flex:1;}
+.value-row .price{flex-shrink:0;color:#C9A84C;font-weight:700;text-align:right;}
+.value-total{display:flex;justify-content:space-between;padding:16px 0 8px;max-width:480px;margin:0 auto;font-size:14px;color:rgba(245,240,232,0.5);}
+.value-total .price{color:rgba(245,240,232,0.5);text-decoration:line-through;}
+.value-ascent{display:flex;justify-content:space-between;align-items:center;padding:16px 0;max-width:480px;margin:0 auto;border-top:2px solid #C9A84C;}
+.value-ascent .item{font-size:18px;font-weight:700;color:#F5F0E8;}
+.value-ascent .price{font-size:24px;font-weight:900;color:#C9A84C;}
+/* ===== PRO Badge ===== */
+.pro-slots-badge{display:inline-block;background:#C9A84C;color:#050507;font-size:11px;font-weight:700;letter-spacing:0.15em;padding:4px 14px;margin-bottom:8px;}
+/* ===== Tokushoho ===== */
+.tokushoho{background:#050507;border-top:1px solid rgba(201,168,76,0.15);padding:48px 20px;max-width:600px;margin:0 auto;}
+.tokushoho h3{font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.2em;color:#C9A84C;margin:0 0 24px;text-align:center;}
+.tokushoho-table{font-size:12px;color:rgba(245,240,232,0.55);line-height:1.85;}
+.tokushoho-row{display:grid;grid-template-columns:120px 1fr;gap:8px;padding:8px 0;border-bottom:1px solid rgba(245,240,232,0.06);}
+.tokushoho-row dt{color:rgba(245,240,232,0.4);font-weight:600;}
+.tokushoho-row dd{margin:0;}
+.tokushoho-row dd a{color:#C9A84C;text-decoration:none;}
 </style>
 </head>
 <body>
@@ -1386,9 +1426,8 @@ footer {
     <p class="fv-price-context fade-up fade-up-3">気に入ったら月¥4,980〜。まず無料で試す。</p>
     <p class="fv-desc fade-up fade-up-4">動画を送るだけ。<span class="fv-desc-em">Kait</span>が直接診断します。</p>
 
-    <a href="https://lin.ee/WGWUFeW" class="btn-cta-main fade-up fade-up-5">今すぐKaitに診てもらう</a>
-    <a href="#how-it-works" class="btn-cta-sub fade-up fade-up-5">診断の仕組みを見る</a>
-    <p class="fv-note fade-up fade-up-5">LINEで30秒。いつでも解約可能。</p>
+    <a href="https://lin.ee/WGWUFeW" class="btn-cta-main fade-up fade-up-5">今すぐ無料でシュート診断を受ける</a>
+    <p class="fv-note fade-up fade-up-5">まず診断だけ、試してみてください</p>
 
     <div class="scroll-indicator fade-up fade-up-5">
       <div class="scroll-line"></div>
@@ -1396,6 +1435,43 @@ footer {
     </div>
 
   </div>
+</section>
+
+<!-- ━━━━ EMPATHY ━━━━ -->
+<section class="empathy-section reveal">
+  <h2 class="empathy-title">あなたのことですか？</h2>
+  <div class="empathy-voice">「3年生でベンチ。でもバスケが好きだからそんな簡単に辞めれない。後輩を見返したい」</div>
+  <div class="empathy-voice">「カリーのような高いシュート確率と長い飛距離で戦いたい。SGAのような1on1がしたい」</div>
+  <p class="empathy-closer">才能の話じゃない。根拠がなかっただけだ。</p>
+</section>
+
+<!-- ━━━━ HERO JOURNEY ━━━━ -->
+<section class="hero-journey reveal">
+  <h2>Kaitも、同じだった</h2>
+  <div class="hero-journey-body">無名で、実績もなかった。
+それでもプロになりたかった。
+
+「プロの基準」も「プロの練習」も、
+誰も教えてくれなかった。
+
+あの時それを知っていたら、
+もっと上に行けていたかもしれない。
+
+数字は残酷だ。
+でも数字は、嘘をつかない。
+
+数値化した瞬間、
+初めて「何を直せばいいか」がわかった。
+
+今、俺はプロになった。
+でもあの頃の自分みたいな選手が
+まだたくさんいる。
+
+その選手の力になりたくて、
+ASCENTを作った。
+
+プロの基準を、スマホ1台で。</div>
+  <p class="hero-journey-sig">── 森木 開斗 / プロ3x3選手 / SANJO BEATERS</p>
 </section>
 
 <!-- ━━━━ PROBLEM ━━━━ -->
@@ -1523,6 +1599,12 @@ footer {
   </div>
 </section>
 
+<!-- CTA②: SOLUTION後 -->
+<div class="section-cta" style="background:#050507;">
+  <p class="section-cta-context">あなたの3指標を測ってみますか？</p>
+  <a href="https://lin.ee/WGWUFeW" class="btn-cta-main">今すぐ無料でシュート診断を受ける</a>
+</div>
+
 <!-- ━━━━ HOW IT WORKS ━━━━ -->
 <section class="how-it-works-v7 reveal" id="how-it-works">
   <p class="section-eyebrow">HOW IT WORKS</p>
@@ -1585,6 +1667,33 @@ footer {
     </div>
 
   </div>
+
+  <!-- 診断体験の声 -->
+  <div class="testimonial-voices" style="margin-top:40px;">
+    <h3>診断を受けた選手の声</h3>
+    <div class="voice-card">「自分のシュートが入らない原因と身体の使い方の見直しになった。改善点がたくさんわかってよかった！」</div>
+    <div class="voice-card">「めっちゃ参考になります。背中を押してくれるメッセージでやる気倍増します！！」</div>
+  </div>
+
+  <!-- CTA③: HOW IT WORKS後 -->
+  <div class="section-cta">
+    <p class="section-cta-context">同じ結果を、あなたにも</p>
+    <a href="https://lin.ee/WGWUFeW" class="btn-cta-main">今すぐ無料でシュート診断を受ける</a>
+  </div>
+</section>
+
+<!-- ━━━━ VALUE STACK ━━━━ -->
+<section class="value-stack reveal">
+  <h2>月¥4,980で得られるものを<br>先に確認してください</h2>
+  <div class="value-table">
+    <div class="value-row"><span class="item">AIシュートSCAN診断（月複数回・骨格解析）</span><span class="price">¥6,500相当</span></div>
+    <div class="value-row"><span class="item">ASCENT Practice フル機能</span><span class="price">¥1,500相当</span></div>
+    <div class="value-row"><span class="item">保護者向け進捗レポート（月次）</span><span class="price">¥960相当</span></div>
+    <div class="value-row"><span class="item">Kaitテキストフィードバック（月2回）</span><span class="price">¥4,500相当</span></div>
+    <div class="value-row"><span class="item">Kait 1on1サポート（月1回）</span><span class="price">¥11,000相当</span></div>
+  </div>
+  <div class="value-total"><span class="item">バラで揃えると</span><span class="price">¥24,460/月相当</span></div>
+  <div class="value-ascent"><span class="item">ASCENT UNLEASH</span><span class="price">¥4,980/月</span></div>
 </section>
 
 <!-- ━━━━ PLANS ━━━━ -->
@@ -1636,6 +1745,7 @@ footer {
 
   <!-- PRO — ghost button -->
   <div class="plan-card reveal">
+    <div class="pro-slots-badge">残り2枠</div>
     <div class="plan-name">PRO</div>
     <div class="plan-tagline">月次Q&A＋個別テキストFBで最速改善</div>
     <div class="plan-price">
@@ -1652,6 +1762,12 @@ footer {
     <a href="https://buy.stripe.com/aFaeVccwhbeAf4seYTf7i0C" class="btn-ghost" target="_blank" rel="noopener noreferrer">PROプランに入会する ＞</a>
   </div>
 </section>
+
+<!-- CTA④: PLANS後 -->
+<div class="section-cta reveal" style="background:#050507;">
+  <p class="section-cta-context">7日間、リスクゼロで試せます</p>
+  <a href="https://lin.ee/WGWUFeW" class="btn-cta-main">今すぐ無料でシュート診断を受ける</a>
+</div>
 
 <!-- ━━━━ STAGE DESIGN ━━━━ -->
 <section class="section-light reveal">
@@ -1830,6 +1946,12 @@ footer {
   </div>
 </section>
 
+<!-- CTA⑤: FAQ後 -->
+<div class="section-cta reveal" style="background:#0A0A14;">
+  <p class="section-cta-context">不安が消えたなら、あとは行動だけ</p>
+  <a href="https://lin.ee/WGWUFeW" class="btn-cta-main">今すぐ無料でシュート診断を受ける</a>
+</div>
+
 <!-- ━━━━ NARROW / FINAL CTA ━━━━ -->
 <section class="narrow-section reveal">
   <div class="narrow-box">
@@ -1855,8 +1977,8 @@ footer {
       </div>
     </div>
 
-    <a href="https://lin.ee/WGWUFeW" class="btn-primary">LINEで無料AI診断を始める ＞</a>
-    <p style="font-size:11px; color:var(--text-muted); text-align:center; margin-top:12px; letter-spacing:0.08em;">登録無料・診断無料・24時間いつでも</p>
+    <a href="https://lin.ee/WGWUFeW" class="btn-cta-main" style="max-width:100%;">今すぐ無料でシュート診断を受ける</a>
+    <p style="font-size:13px; color:rgba(245,240,232,0.5); text-align:center; margin-top:12px;">Kaitと一緒に、数字を変えよう</p>
   </div>
 </section>
 
@@ -1867,12 +1989,29 @@ footer {
   </div>
   <div class="footer-tagline">No Limits — 非日常を当たり前に</div>
   <div class="footer-links">
-    <a href="#">特定商取引法</a>
+    <a href="#tokushoho">特定商取引法</a>
     <a href="#">プライバシーポリシー</a>
-    <a href="#">お問い合わせ</a>
+    <a href="mailto:moriki.beaters@gmail.com">お問い合わせ</a>
   </div>
   <div class="footer-copy">© 2026 Step By Step ASCENT</div>
 </footer>
+
+<!-- ━━━━ TOKUSHOHO ━━━━ -->
+<section class="tokushoho" id="tokushoho">
+  <h3>特定商取引法に基づく表示</h3>
+  <div class="tokushoho-table">
+    <div class="tokushoho-row"><dt>事業者名</dt><dd>Step By Step ASCENT</dd></div>
+    <div class="tokushoho-row"><dt>代表者名</dt><dd>森木 開斗</dd></div>
+    <div class="tokushoho-row"><dt>所在地</dt><dd>〒104-0061 東京都中央区銀座一丁目22番11号 銀座大竹ビジデンス 2F</dd></div>
+    <div class="tokushoho-row"><dt>メール</dt><dd><a href="mailto:moriki.beaters@gmail.com">moriki.beaters@gmail.com</a></dd></div>
+    <div class="tokushoho-row"><dt>LINE</dt><dd><a href="https://lin.ee/WGWUFeW">https://lin.ee/WGWUFeW</a></dd></div>
+    <div class="tokushoho-row"><dt>販売価格</dt><dd>各プランページに記載</dd></div>
+    <div class="tokushoho-row"><dt>支払方法</dt><dd>クレジットカード（Stripe）</dd></div>
+    <div class="tokushoho-row"><dt>支払時期</dt><dd>申込時即時</dd></div>
+    <div class="tokushoho-row"><dt>サービス提供時期</dt><dd>決済完了後即時</dd></div>
+    <div class="tokushoho-row"><dt>返品・返金</dt><dd>7日以内・理由不問・全額返金（LINE連絡・1回限り）</dd></div>
+  </div>
+</section>
 
 <!-- ━━━━ FIXED CTA BAR ━━━━ -->
 <div class="fixed-cta" id="fixedCta">
