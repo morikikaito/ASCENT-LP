@@ -2,7 +2,11 @@
   "permissions": {
     "allow": [
       "Bash(gh repo:*)",
-      "Bash(gh api:*)"
+      "Bash(gh api:*)",
+      "Bash(pip3 list:*)",
+      "Bash(python3 -c \"import anthropic; print\\(anthropic.__version__\\)\")",
+      "Bash(ls:*)",
+      "Bash(pip3 install:*)"
     ]
   }
 }
