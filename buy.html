@@ -115,7 +115,9 @@ h2 em{font-style:normal;color:var(--gold);}
 .cta-section p{font-size:14px;color:var(--text-muted);margin-bottom:16px;}
 
 /* ===== Credibility ===== */
-.cred{max-width:640px;margin:0 auto;padding:80px 20px;text-align:center;}
+.cred{min-height:80vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 24px;position:relative;overflow:hidden;color:#F5F0E8;}
+.cred::before{content:'';position:absolute;inset:0;background:linear-gradient(rgba(5,5,7,0.45),rgba(5,5,7,0.45)),url('IMG_3446.jpeg');background-size:cover;background-position:center;z-index:0;}
+.cred-inner{position:relative;z-index:1;text-align:center;max-width:480px;width:100%;}
 .cred-name{font-family:'Cinzel',serif;font-size:16px;letter-spacing:0.1em;color:var(--gold);margin-bottom:8px;}
 .cred-title{font-size:12px;color:var(--text-muted);line-height:1.8;margin-bottom:24px;}
 .research{background:#13131F;padding:24px;border-radius:8px;text-align:left;margin-top:24px;font-size:13px;color:var(--text-muted);line-height:2;}
@@ -381,23 +383,13 @@ h2 em{font-style:normal;color:var(--gold);}
 
 <!-- [10] Credibility -->
 <section class="cred reveal">
+  <div class="cred-inner">
   <div class="section-label">CREDIBILITY</div>
   <div class="cred-name">KAITO MORIKI</div>
   <div class="cred-title">
     SANJO BEATERSプロ3x3バスケットボール選手<br>
     Step By Step ASCENT 代表・開発者
   </div>
-
-  <div class="photo-grid cols-2" style="margin-bottom:16px;">
-    <img src="IMG_3446.jpeg" alt="森木開斗 SANJO BEATERS プロ3x3バスケ選手" class="photo" style="aspect-ratio:4/5;object-fit:cover;object-position:center;">
-    <img src="IMG_2667.jpeg" alt="森木開斗 SANJO BEATERS プロ3x3バスケ選手" class="photo" style="aspect-ratio:4/5;object-fit:cover;object-position:center;">
-  </div>
-  <div class="photo-grid cols-3" style="margin-bottom:24px;">
-    <img src="IMG_5088.jpeg" alt="ASCENTクリニック指導の様子" class="photo" style="aspect-ratio:1;object-fit:cover;">
-    <img src="IMG_5083.jpeg" alt="ASCENTクリニック指導の様子" class="photo" style="aspect-ratio:1;object-fit:cover;">
-    <img src="IMG_5092.jpeg" alt="ASCENTクリニック指導の様子" class="photo" style="aspect-ratio:1;object-fit:cover;">
-  </div>
-  <p class="photo-caption">実際のクリニック指導の様子</p>
 
   <div class="research">
     <p>男子高校生を対象にした研究では、正しいフィードバックで6週間（週3回）シュート成功率が<span class="num">10%</span>以上向上したことが確認されています。</p>
@@ -406,6 +398,7 @@ h2 em{font-style:normal;color:var(--gold);}
   <div class="research" style="margin-top:12px;">
     <p>感覚で繰り返すだけでは、NBAでさえ50年間で<span class="num">+1.8%</span>しか改善されていません。</p>
     <p class="cite">Stefani &amp; Siegrist, 2022 / SAGE Journals</p>
+  </div>
   </div>
 </section>
 
