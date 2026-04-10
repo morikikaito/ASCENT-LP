@@ -35,14 +35,20 @@ h2 em{font-style:normal;color:var(--gold);}
 .ann-bar .label{font-family:'Cinzel',serif;font-size:12px;color:var(--gold);font-weight:600;letter-spacing:0.1em;}
 
 /* ===== Hero ===== */
-.hero{padding:64px 20px 56px;text-align:center;max-width:640px;margin:0 auto;}
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 24px 36px;position:relative;overflow:hidden;background-color:#000;color:#F5F0E8;}
+.hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(5,5,7,0.55),rgba(5,5,7,0.65)),url('IMG_3413.jpeg');background-size:cover;background-position:center top;z-index:0;}
+.hero-content{position:relative;z-index:1;text-align:center;width:100%;max-width:480px;}
+.hero-logo{margin-bottom:24px;}
+.hero-logo img{max-width:200px;margin:0 auto;display:block;}
 .hero-catch{font-family:'Noto Serif JP',serif;font-size:clamp(24px,6vw,34px);font-weight:900;line-height:1.5;margin-bottom:12px;}
 .hero-sub{font-size:15px;color:var(--text-muted);margin-bottom:28px;}
 .hero-price{margin-bottom:8px;}
 .hero-price .old{font-family:'Cormorant Garamond',serif;font-size:24px;color:rgba(245,240,232,0.4);text-decoration:line-through;}
 .hero-price .new{font-family:'Cormorant Garamond',serif;font-size:56px;font-weight:400;color:var(--text);margin-left:12px;}
 .hero-price .currency{font-family:'Cinzel',serif;font-size:14px;color:var(--text);}
-.countdown{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--gold);background:#13131F;padding:10px 16px;border-radius:6px;margin-bottom:24px;display:inline-block;}
+.countdown{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--gold);background:rgba(19,19,31,0.8);padding:10px 16px;border-radius:6px;margin-bottom:24px;display:inline-block;}
+.scroll-indicator{margin-top:32px;display:flex;flex-direction:column;align-items:center;gap:8px;color:rgba(245,240,232,0.5);font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.2em;}
+.scroll-line{width:1px;height:28px;background:rgba(245,240,232,0.2);}
 
 /* ===== Buttons ===== */
 .btn-main{display:block;max-width:400px;margin:0 auto 8px;padding:18px 24px;background:var(--gold);color:#050507;font-size:16px;font-weight:700;text-align:center;border-radius:0;transition:opacity .2s;}
@@ -167,9 +173,6 @@ h2 em{font-style:normal;color:var(--gold);}
 .photo-grid.cols-2{grid-template-columns:1fr 1fr;}
 .photo-grid.cols-3{grid-template-columns:1fr 1fr 1fr;}
 .photo-caption{font-size:11px;color:rgba(245,240,232,0.35);text-align:center;margin-top:8px;}
-.hero-bg{position:relative;background-image:url('IMG_3446.jpeg');background-size:cover;background-position:center top;}
-.hero-bg::before{content:'';position:absolute;inset:0;background:rgba(5,5,7,0.65);}
-.hero-bg>*{position:relative;z-index:1;}
 .app-frame{background:#1a1a1a;border-radius:20px;padding:8px;border:2px solid rgba(255,255,255,0.1);overflow:hidden;}
 .app-frame img{border-radius:14px;width:100%;display:block;}
 .app-scroll{display:flex;gap:12px;overflow-x:auto;padding:4px 0 12px;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;}
@@ -190,17 +193,26 @@ h2 em{font-style:normal;color:var(--gold);}
 </div>
 
 <!-- [2] Hero -->
-<section class="hero hero-bg">
-  <h1 class="hero-catch">7日間、全額返金保証。</h1>
-  <p class="hero-sub">初月¥4,133・7日間返金保証つき</p>
-  <div class="countdown" id="heroTimer"></div>
-  <div class="hero-price">
-    <span class="old">¥4,980</span>
-    <span class="currency">¥</span><span class="new">4,133</span>
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-logo">
+      <img src="image_0.png" alt="Step By Step ASCENT Logo">
+    </div>
+    <h1 class="hero-catch">7日間、全額返金保証。</h1>
+    <p class="hero-sub">初月¥4,133・7日間返金保証つき</p>
+    <div class="countdown" id="heroTimer"></div>
+    <div class="hero-price">
+      <span class="old">¥4,980</span>
+      <span class="currency">¥</span><span class="new">4,133</span>
+    </div>
+    <p style="font-size:12px;color:var(--text-muted);margin-bottom:28px;">2ヶ月目以降 ¥4,980/月</p>
+    <a href="https://buy.stripe.com/28EcN47bXbeA8G4bMHf7i0B" class="btn-main" target="_blank" rel="noopener noreferrer">今すぐUNLEASHで始める</a>
+    <div class="guarantee"><span class="shield">🛡</span>7日間全額返金保証つき</div>
+    <div class="scroll-indicator">
+      <div class="scroll-line"></div>
+      <span>SCROLL</span>
+    </div>
   </div>
-  <p style="font-size:12px;color:var(--text-muted);margin-bottom:28px;">2ヶ月目以降 ¥4,980/月</p>
-  <a href="https://buy.stripe.com/28EcN47bXbeA8G4bMHf7i0B" class="btn-main" target="_blank" rel="noopener noreferrer">今すぐUNLEASHで始める</a>
-  <div class="guarantee"><span class="shield">🛡</span>7日間全額返金保証つき</div>
 </section>
 
 <!-- [3] Empathy -->
