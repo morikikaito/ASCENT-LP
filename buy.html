@@ -191,7 +191,7 @@ h2 em{font-style:normal;color:var(--gold);}
 
 <!-- [2] Hero -->
 <section class="hero hero-bg">
-  <h1 class="hero-catch">シュートが変わるまで、<br>全額返金。</h1>
+  <h1 class="hero-catch">7日間、全額返金保証。</h1>
   <p class="hero-sub">初月¥4,133・7日間返金保証つき</p>
   <div class="countdown" id="heroTimer"></div>
   <div class="hero-price">
@@ -511,15 +511,20 @@ if(fixedCta){
   });
 }
 
-// 48h Countdown Timer
+// 48h Countdown Timer (21:00 fixed start)
 (function(){
-  var KEY='ascent_buy_campaign_end';
-  var end=localStorage.getItem(KEY);
-  if(!end){end=Date.now()+48*60*60*1000;localStorage.setItem(KEY,end);}
-  end=parseInt(end,10);
-  function update(){
+  function getEndTime(){
+    var now=new Date();
+    var start=new Date();
+    start.setHours(21,0,0,0);
+    if(now<start){return null;}
+    return new Date(start.getTime()+48*60*60*1000);
+  }
+  function updateTimer(){
+    var end=getEndTime();
     var els=document.querySelectorAll('#heroTimer,#finalTimer');
-    var diff=end-Date.now();
+    if(!end){els.forEach(function(el){el.textContent='本日21:00よりキャンペーン開始';});return;}
+    var diff=end-new Date();
     if(diff<=0){els.forEach(function(el){el.textContent='このキャンペーンは終了しました';});return;}
     var h=Math.floor(diff/3600000);
     var m=Math.floor((diff%3600000)/60000);
@@ -527,8 +532,9 @@ if(fixedCta){
     var t='残り '+h+'時間 '+('0'+m).slice(-2)+'分 '+('0'+s).slice(-2)+'秒';
     els.forEach(function(el){el.textContent=t;});
   }
-  update();
-  setInterval(update,1000);
+  updateTimer();
+  setInterval(updateTimer,1000);
+  setInterval(function(){updateTimer();},60*60*1000);
 })();
 </script>
 </body>
