@@ -428,74 +428,84 @@ h2 em{font-style:normal;color:var(--gold);}
 </div>
 
 <!-- Credibility Graphs -->
-<section class="section-dark" style="padding:40px 20px;">
-  <div style="max-width:640px;margin:0 auto;" class="cred-graphs">
+<section style="background:var(--bg);padding:64px 20px 80px;">
+  <div style="max-width:640px;margin:0 auto;">
 
-    <!-- Graph 1: Bar (shooting %) -->
-    <div class="cred-graph reveal" id="credBar1">
-      <h3>正しいフィードバックで、<br>シュート成功率が変わる</h3>
-      <div class="chart-bars">
-        <div class="chart-bar-col grey">
-          <div class="chart-bar-val">47.8%</div>
-          <div class="chart-bar" style="--h:80px;"></div>
-          <div class="chart-bar-label">トレーニング前</div>
+    <!-- Section header -->
+    <div class="section-label reveal" style="text-align:center;">DATA</div>
+    <h2 class="reveal" style="text-align:center;margin-bottom:8px;">データを使う選手と<br>使わない選手。<br><em>差は、一目でわかる。</em></h2>
+    <p class="reveal" style="text-align:center;font-size:13px;color:var(--text-muted);margin-bottom:48px;">「がんばる」だけでは、成長の天井は変わらない。</p>
+
+    <!-- Hero comparison chart -->
+    <div class="reveal" id="heroChart" style="background:#13131F;border:1px solid rgba(201,168,76,0.2);border-radius:8px;padding:32px 24px 24px;">
+
+      <!-- Column labels top -->
+      <div style="display:flex;justify-content:space-around;margin-bottom:16px;">
+        <div style="text-align:center;flex:1;">
+          <span style="font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.2em;color:rgba(245,240,232,0.35);">WITHOUT DATA</span>
         </div>
-        <div class="chart-bar-col gold">
-          <div class="chart-bar-val">58.0%</div>
-          <div class="chart-bar" style="--h:130px;"></div>
-          <div class="chart-bar-label">6週間後</div>
+        <div style="text-align:center;flex:1;">
+          <span style="font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.2em;color:var(--gold);">WITH DATA</span>
         </div>
       </div>
-      <div class="chart-diff">+10.22%</div>
-      <p class="caption">男子高校生対象・6週間・週3回のトレーニング</p>
-      <p class="cite">Oktariza et al., 2019 / ERIC</p>
+
+      <!-- Bars -->
+      <div style="display:flex;align-items:flex-end;justify-content:space-around;height:220px;border-bottom:1px solid rgba(255,255,255,0.08);position:relative;">
+
+        <!-- Left: no feedback (±0%) -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:8px;flex:1;">
+          <span style="font-family:'Cormorant Garamond',serif;font-size:28px;color:rgba(245,240,232,0.35);">±0%</span>
+          <div class="hero-bar-grey" style="width:64px;height:0;background:rgba(245,240,232,0.15);border-radius:3px 3px 0 0;transition:height 1.2s ease;--h:6px;"></div>
+        </div>
+
+        <!-- Divider + diff badge -->
+        <div style="position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:0;height:100%;">
+          <div style="width:1px;height:100%;background:rgba(255,255,255,0.06);"></div>
+          <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:#0A0A14;border:1px solid var(--gold);padding:6px 10px;white-space:nowrap;text-align:center;">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--gold);font-weight:600;">+10.22%</div>
+            <div style="font-size:9px;color:var(--text-muted);letter-spacing:0.05em;">の差</div>
+          </div>
+        </div>
+
+        <!-- Right: with feedback (+10.22%) -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:8px;flex:1;">
+          <span style="font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--gold);font-weight:600;">+10.22%</span>
+          <div class="hero-bar-gold" style="width:64px;height:0;background:var(--gold);border-radius:3px 3px 0 0;transition:height 1.2s ease 0.2s;--h:200px;"></div>
+        </div>
+      </div>
+
+      <!-- Bottom labels -->
+      <div style="display:flex;justify-content:space-around;margin-top:12px;">
+        <div style="text-align:center;flex:1;">
+          <div style="font-size:11px;color:rgba(245,240,232,0.4);line-height:1.6;">通常練習のみ<br>8週間</div>
+        </div>
+        <div style="flex:0 0 1px;"></div>
+        <div style="text-align:center;flex:1;">
+          <div style="font-size:11px;color:rgba(201,168,76,0.8);line-height:1.6;">AIフィードバック<br>6週間</div>
+        </div>
+      </div>
+
+      <p style="font-size:11px;color:var(--text-muted);margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.06);">男子高校生対象・週3回 / Oktariza et al., 2019 / ERIC &nbsp;|&nbsp; Sajjadi et al., 2026 / Frontiers in Psychology</p>
     </div>
 
-    <!-- Graph 2: Line (NBA 50yr) -->
-    <div class="cred-graph reveal" id="credLine">
-      <h3>感覚で繰り返すだけでは、<br>NBAでさえ50年間ほぼ変化なし</h3>
-      <div class="chart-line">
-        <svg viewBox="0 0 400 160" preserveAspectRatio="xMidYMid meet">
-          <line x1="50" y1="15" x2="370" y2="15" class="gl"/>
-          <line x1="50" y1="55" x2="370" y2="55" class="gl"/>
-          <line x1="50" y1="95" x2="370" y2="95" class="gl"/>
-          <line x1="50" y1="135" x2="370" y2="135" class="gl"/>
-          <text x="45" y="19" class="axv">80%</text>
-          <text x="45" y="59" class="axv">78%</text>
-          <text x="45" y="99" class="axv">76%</text>
-          <text x="45" y="139" class="axv">74%</text>
-          <text x="70" y="155" class="ax" text-anchor="middle">1969</text>
-          <text x="210" y="155" class="ax" text-anchor="middle">1990</text>
-          <text x="350" y="155" class="ax" text-anchor="middle">2019</text>
-          <polyline points="70,103 210,87 350,69" class="dl"/>
-          <circle cx="70" cy="103" r="4" class="d"/>
-          <circle cx="210" cy="87" r="4" class="d"/>
-          <circle cx="350" cy="69" r="5" class="de"/>
-          <text x="70" y="93" class="vl" text-anchor="middle">75.6%</text>
-          <text x="350" y="59" class="vl" text-anchor="middle">77.4%</text>
-        </svg>
-      </div>
-      <p class="caption">NBA全選手50年間のフリースロー成功率推移</p>
-      <p class="cite">Stefani &amp; Siegrist, 2022 / SAGE Journals</p>
-    </div>
+    <!-- Supporting stat pills -->
+    <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;">
 
-    <!-- Graph 3: Bar (8-week comparison) -->
-    <div class="cred-graph reveal" id="credBar2">
-      <h3>正しいフィードバックありvsなし：<br>8週間の差</h3>
-      <div class="chart-bars">
-        <div class="chart-bar-col grey">
-          <div class="chart-bar-val">±0%</div>
-          <div class="chart-bar" style="--h:4px;"></div>
-          <div class="chart-bar-label">通常練習のみ</div>
-        </div>
-        <div class="chart-bar-col gold">
-          <div class="chart-bar-val">+5.0%</div>
-          <div class="chart-bar" style="--h:120px;"></div>
-          <div class="chart-bar-label">フィードバックあり</div>
-        </div>
+      <!-- Stat 1: NBA -->
+      <div style="background:#13131F;border:1px solid rgba(201,168,76,0.15);border-radius:8px;padding:20px 16px;">
+        <div style="font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.2em;color:var(--text-muted);margin-bottom:8px;">NBA 50年間</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:28px;color:rgba(245,240,232,0.5);font-weight:600;">+1.8%</div>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:6px;line-height:1.6;">感覚で繰り返すだけでは<br>50年でわずかな変化</div>
+        <div style="font-size:9px;color:rgba(245,240,232,0.2);margin-top:8px;">Stefani &amp; Siegrist, 2022 / SAGE</div>
       </div>
-      <p class="caption">8週間のシュート成功率変化</p>
-      <p class="cite">Sajjadi et al., 2026 / Frontiers in Psychology</p>
+
+      <!-- Stat 2: feedback diff -->
+      <div style="background:#13131F;border:1px solid rgba(201,168,76,0.3);border-radius:8px;padding:20px 16px;">
+        <div style="font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.2em;color:var(--gold);margin-bottom:8px;">フィードバックあり</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--gold);font-weight:600;">+5.0%</div>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:6px;line-height:1.6;">通常練習との差<br>8週間で開く一方</div>
+        <div style="font-size:9px;color:rgba(245,240,232,0.2);margin-top:8px;">Sajjadi et al., 2026 / Frontiers</div>
+      </div>
     </div>
 
   </div>
@@ -778,26 +788,20 @@ var CAMPAIGN_START = '2026-04-15T21:00:00+09:00';
   setInterval(updateTimer, 1000);
 })();
 
-// Chart scroll animations
+// Hero chart bar animation
 (function(){
+  var el=document.getElementById('heroChart');
+  if(!el)return;
   var co=new IntersectionObserver(function(es){
     es.forEach(function(e){
       if(!e.isIntersecting)return;
-      // Bar charts
-      if(e.target.id==='credBar1'||e.target.id==='credBar2'){
-        e.target.querySelectorAll('.chart-bar-col').forEach(function(c){c.classList.add('animate');});
-      }
-      // Line chart
-      if(e.target.id==='credLine'){
-        e.target.querySelector('.chart-line').classList.add('animate');
-      }
+      e.target.querySelectorAll('.hero-bar-grey,.hero-bar-gold').forEach(function(bar){
+        bar.style.height=getComputedStyle(bar).getPropertyValue('--h').trim()||'0px';
+      });
       co.unobserve(e.target);
     });
   },{threshold:0.3});
-  ['credBar1','credLine','credBar2'].forEach(function(id){
-    var el=document.getElementById(id);
-    if(el)co.observe(el);
-  });
+  co.observe(el);
 })();
 </script>
 </body>
