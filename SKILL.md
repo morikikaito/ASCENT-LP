@@ -217,6 +217,17 @@
 
 ## 5. 外部リンク一覧
 
+### サービスURL
+| 用途 | URL |
+|------|-----|
+| LP（メイン） | `https://stepbystep-ascent.com` |
+| LP（購買） | `https://stepbystep-ascent.com/buy` |
+| LP（分析ダッシュボード） | `https://stepbystep-ascent.com/analytics` |
+| 受講規約 | `https://stepbystep-ascent.com/terms/` |
+| Practice | `https://practice.stepbystep-ascent.com` |
+| Trial | `https://practice.stepbystep-ascent.com/trial` |
+
+### LINE
 | 用途 | URL |
 |------|-----|
 | LINE（全CTA統一） | `https://lin.ee/WGWUFeW` |
@@ -224,10 +235,19 @@
 | LINE（PG） | `https://lin.ee/WGWUFeW?ref=pg` |
 | LINE（PF/C） | `https://lin.ee/WGWUFeW?ref=pf` |
 | LINE（保護者） | `https://lin.ee/WGWUFeW?ref=parents` |
-| Stripe LITE | `https://buy.stripe.com/bJecN47bXciE6xW183f7i0A` |
+
+### Stripe決済
+| 用途 | URL |
+|------|-----|
+| Stripe LITE | `https://buy.stripe.com/bJecN47bXc1E6xW183f7i0A` |
 | Stripe UNLEASH | `https://buy.stripe.com/28EcN47bXbeA8G4bMHf7i0B` |
 | Stripe PRO | `https://buy.stripe.com/aFaeVccwhbeAf4seYTf7i0C` |
+
+### その他
+| 用途 | URL |
+|------|-----|
 | メール | `moriki.beaters@gmail.com` |
+| GA4 | `G-YDTC8ECY4R` |
 
 ---
 
