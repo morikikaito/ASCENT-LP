@@ -1590,23 +1590,85 @@ ASCENTを作った。
   </div>
 
   <!-- Research Data -->
-  <div style="background:#13131F;padding:32px 20px;border-radius:12px;margin-top:32px;color:#F5F0E8;">
-    <p style="font-family:'Noto Serif JP',serif;font-size:15px;line-height:2;margin-bottom:20px;">
+  <div style="margin-top:32px;">
+
+    <!-- Intro -->
+    <p style="font-family:'Noto Serif JP',serif;font-size:15px;line-height:2;margin-bottom:24px;color:#F5F0E8;">
       感覚で繰り返すだけでは、<br>NBAでさえ50年間ほぼ改善されていない。
     </p>
-    <p style="font-family:'Noto Serif JP',serif;font-size:14px;line-height:2;margin-bottom:16px;">
-      世界最高水準の選手が毎日練習しても、<br>フリースロー成功率の改善は50年で<span style="font-family:'Cormorant Garamond',serif;font-size:28px;color:#C9A84C;font-weight:600;">+1.8%</span>。
-    </p>
-    <p style="font-family:'Noto Serif JP',serif;font-size:14px;line-height:2;margin-bottom:16px;">
-      通常練習のみ：8週間でシュート成功率の改善<span style="font-family:'Cormorant Garamond',serif;font-size:28px;color:#C9A84C;font-weight:600;">ゼロ</span>。<br>
-      フィードバックあり：同じ8週間で<span style="font-family:'Cormorant Garamond',serif;font-size:28px;color:#C9A84C;font-weight:600;">+5%</span>向上。
-    </p>
-    <p style="font-family:'Noto Serif JP',serif;font-size:15px;line-height:2;font-weight:500;">
+
+    <!-- Hero comparison chart -->
+    <div id="lpResearchChart" style="background:#13131F;border:1px solid rgba(201,168,76,0.2);border-radius:12px;padding:28px 20px 20px;">
+
+      <!-- Column labels top -->
+      <div style="display:flex;justify-content:space-around;margin-bottom:14px;">
+        <div style="text-align:center;flex:1;">
+          <span style="font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.2em;color:rgba(245,240,232,0.35);">WITHOUT DATA</span>
+        </div>
+        <div style="text-align:center;flex:1;">
+          <span style="font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.2em;color:#C9A84C;">WITH DATA</span>
+        </div>
+      </div>
+
+      <!-- Bars -->
+      <div style="display:flex;align-items:flex-end;justify-content:space-around;height:200px;border-bottom:1px solid rgba(255,255,255,0.08);position:relative;">
+
+        <!-- Left: no feedback -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:8px;flex:1;">
+          <span style="font-family:'Cormorant Garamond',serif;font-size:26px;color:rgba(245,240,232,0.35);">±0%</span>
+          <div class="lp-bar-grey" style="width:56px;height:0;background:rgba(245,240,232,0.15);border-radius:3px 3px 0 0;transition:height 1.2s ease;--lph:6px;"></div>
+        </div>
+
+        <!-- Center divider + badge -->
+        <div style="position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;">
+          <div style="width:1px;height:100%;background:rgba(255,255,255,0.06);"></div>
+          <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:#0A0A14;border:1px solid #C9A84C;padding:5px 10px;white-space:nowrap;text-align:center;">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:20px;color:#C9A84C;font-weight:600;">+10.22%</div>
+            <div style="font-size:9px;color:rgba(245,240,232,0.5);">の差</div>
+          </div>
+        </div>
+
+        <!-- Right: with feedback -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:8px;flex:1;">
+          <span style="font-family:'Cormorant Garamond',serif;font-size:26px;color:#C9A84C;font-weight:600;">+10.22%</span>
+          <div class="lp-bar-gold" style="width:56px;height:0;background:#C9A84C;border-radius:3px 3px 0 0;transition:height 1.2s ease 0.2s;--lph:185px;"></div>
+        </div>
+      </div>
+
+      <!-- Bottom labels -->
+      <div style="display:flex;justify-content:space-around;margin-top:10px;">
+        <div style="text-align:center;flex:1;">
+          <div style="font-size:11px;color:rgba(245,240,232,0.4);line-height:1.6;">通常練習のみ<br>8週間</div>
+        </div>
+        <div style="flex:0 0 1px;"></div>
+        <div style="text-align:center;flex:1;">
+          <div style="font-size:11px;color:rgba(201,168,76,0.8);line-height:1.6;">AIフィードバック<br>6週間</div>
+        </div>
+      </div>
+
+      <!-- Stat pills -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px;">
+        <div style="background:#0A0A14;border:1px solid rgba(201,168,76,0.15);border-radius:6px;padding:14px 12px;">
+          <div style="font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.15em;color:rgba(245,240,232,0.35);margin-bottom:6px;">NBA 50年間</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:24px;color:rgba(245,240,232,0.4);font-weight:600;">+1.8%</div>
+          <div style="font-size:10px;color:rgba(245,240,232,0.4);margin-top:4px;line-height:1.5;">感覚だけでは<br>50年でここまで</div>
+        </div>
+        <div style="background:#0A0A14;border:1px solid rgba(201,168,76,0.3);border-radius:6px;padding:14px 12px;">
+          <div style="font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.15em;color:#C9A84C;margin-bottom:6px;">フィードバックあり</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:24px;color:#C9A84C;font-weight:600;">+5.0%</div>
+          <div style="font-size:10px;color:rgba(245,240,232,0.5);margin-top:4px;line-height:1.5;">通常練習との差<br>8週間で開く一方</div>
+        </div>
+      </div>
+
+      <p style="font-size:10px;color:rgba(245,240,232,0.3);margin-top:14px;line-height:1.8;">
+        ・Stefani &amp; Siegrist, 2022 / SAGE Journals<br>
+        ・Sajjadi et al., 2026 / Frontiers in Psychology
+      </p>
+    </div>
+
+    <!-- Conclusion -->
+    <p style="font-family:'Noto Serif JP',serif;font-size:15px;line-height:2;font-weight:700;margin-top:24px;color:#F5F0E8;">
       練習量の問題ではない。<br>「何を直すべきか」が見えていないだけだ。
-    </p>
-    <p style="font-size:11px;color:rgba(245,240,232,0.4);margin-top:20px;line-height:1.8;">
-      ・Stefani &amp; Siegrist, 2022 / SAGE Journals<br>
-      ・Sajjadi et al., 2026 / Frontiers in Psychology
     </p>
   </div>
 </section>
@@ -2376,6 +2438,22 @@ trackEvent('page_view', {});
   }
   update();
   setInterval(update, 1000);
+})();
+
+// LP research chart bar animation
+(function(){
+  var el=document.getElementById('lpResearchChart');
+  if(!el)return;
+  var co=new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(!e.isIntersecting)return;
+      e.target.querySelectorAll('.lp-bar-grey,.lp-bar-gold').forEach(function(bar){
+        bar.style.height=getComputedStyle(bar).getPropertyValue('--lph').trim()||'0px';
+      });
+      co.unobserve(e.target);
+    });
+  },{threshold:0.3});
+  co.observe(el);
 })();
 </script>
 </body>
