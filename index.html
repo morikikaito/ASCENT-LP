@@ -2277,6 +2277,77 @@ document.querySelectorAll('.acc-trigger').forEach(function(btn){
   });
 })();
 
+// CTAクリック追跡
+(function(){
+  document.addEventListener('click', function(e){
+    var link = e.target.closest('a');
+    if(!link) return;
+    var href = link.getAttribute('href') || '';
+    var text = (link.textContent || '').trim().substring(0, 40);
+    if(href.includes('buy.stripe.com')){
+      var plan = 'unleash';
+      if(href.includes('f7i0A')) plan = 'lite';
+      if(href.includes('f7i0C')) plan = 'pro';
+      gtag('event', 'cta_click', { cta_type: 'stripe', plan: plan, cta_text: text, page: 'main_lp' });
+    } else if(href.includes('lin.ee')){
+      gtag('event', 'cta_click', { cta_type: 'line', cta_text: text, page: 'main_lp' });
+    }
+  });
+})();
+
+// FAQ開閉トラッキング
+(function(){
+  var origToggle = window.toggleFaq;
+  window.toggleFaq = function(btn){
+    var item = btn.closest('.faq-item');
+    var wasOpen = item.classList.contains('open');
+    origToggle(btn);
+    if(!wasOpen){
+      var question = (btn.textContent || '').replace(/[＋+]/g, '').trim().substring(0, 50);
+      gtag('event', 'faq_open', { question: question, page: 'main_lp' });
+    }
+  };
+})();
+
+// プランカード注目度
+(function(){
+  var plans = document.querySelectorAll('.plan-card');
+  var planNames = ['LITE', 'UNLEASH', 'PRO'];
+  var planTime = {};
+  var po = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      var idx = Array.prototype.indexOf.call(plans, entry.target);
+      var name = planNames[idx] || 'unknown';
+      if(entry.isIntersecting){
+        planTime[name] = Date.now();
+      } else if(planTime[name]){
+        var dur = Math.round((Date.now() - planTime[name]) / 1000);
+        if(dur >= 2){
+          gtag('event', 'plan_dwell', { plan: name, dwell_seconds: dur, page: 'main_lp' });
+        }
+        delete planTime[name];
+      }
+    });
+  }, {threshold: 0.5});
+  plans.forEach(function(p){ po.observe(p); });
+})();
+
+// UTM流入元記録
+(function(){
+  var params = new URLSearchParams(window.location.search);
+  var utm_source = params.get('utm_source');
+  var utm_medium = params.get('utm_medium');
+  var utm_campaign = params.get('utm_campaign');
+  if(utm_source){
+    gtag('event', 'traffic_source', {
+      source: utm_source,
+      medium: utm_medium || 'none',
+      campaign: utm_campaign || 'none',
+      page: 'main_lp'
+    });
+  }
+})();
+
 // 48h Countdown Timer
 (function() {
   var TIMER_KEY = 'ascent_campaign_end';
