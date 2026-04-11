@@ -1445,6 +1445,12 @@ footer {
 .testimonial-voices{max-width:520px;margin:0 auto;padding:0 20px;}
 .testimonial-voices h3{font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.25em;color:#C9A84C;text-align:center;margin:0 0 24px;}
 .voice-card{padding:20px 24px;background:#13131F;border-left:3px solid rgba(201,168,76,0.4);margin-bottom:16px;font-size:14px;color:rgba(245,240,232,0.75);line-height:1.85;}
+.app-frame{background:#1a1a1a;border-radius:20px;padding:8px;border:2px solid rgba(255,255,255,0.1);overflow:hidden;}
+.app-frame img{border-radius:14px;width:100%;display:block;}
+.app-scroll{display:flex;gap:12px;overflow-x:auto;padding:4px 0 12px;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;}
+.app-scroll .app-frame{flex:0 0 200px;scroll-snap-align:start;}
+.photo-caption{font-size:11px;color:rgba(245,240,232,0.35);text-align:center;margin-top:8px;}
+.sol-link{font-size:13px;color:#C9A84C;text-decoration:underline;text-underline-offset:4px;display:inline-block;margin-top:12px;}
 /* ===== Value Stack ===== */
 .value-stack{background:#0A0A14;padding:64px 20px;text-align:center;}
 .value-stack h2{font-size:18px;font-weight:700;color:#F5F0E8;margin:0 0 32px;line-height:1.6;}
@@ -1830,13 +1836,21 @@ ASCENTを作った。
 
   <!-- ASCENT Practice 紹介 -->
   <div style="max-width:520px;margin:40px auto 0;padding:28px 24px;background:#13131F;border:1px solid rgba(201,168,76,0.3);border-radius:12px;">
-    <p style="font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.2em;color:#C9A84C;margin-bottom:12px;">ASCENT PRACTICE</p>
-    <p style="font-family:'Noto Serif JP',serif;font-size:14px;color:#F5F0E8;line-height:2;margin-bottom:16px;">
-      診断結果をもとに、毎日の練習をASCENT Practiceで管理。<br>
-      6つのトレーニングモード・90日間の練習ヒートマップ・バッジシステムで継続率を高める練習アプリ。<br>
-      UNLEASHプランで全機能が使えます。
-    </p>
-    <a href="https://practice.stepbystep-ascent.com" style="font-size:13px;color:#C9A84C;text-decoration:underline;text-underline-offset:4px;" target="_blank" rel="noopener noreferrer">ASCENT Practiceを見る →</a>
+    <p style="font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.2em;color:#C9A84C;margin-bottom:10px;">ASCENT PRACTICE</p>
+    <h3 style="font-size:16px;font-weight:700;margin-bottom:12px;color:#F5F0E8;">診断結果をもとに、毎日の練習をデータで管理</h3>
+    <ul style="list-style:none;margin-bottom:16px;">
+      <li style="font-size:12px;color:rgba(245,240,232,0.6);padding:5px 0;display:flex;gap:8px;align-items:flex-start;"><span style="width:4px;height:4px;background:#C9A84C;border-radius:50%;flex-shrink:0;margin-top:8px;display:inline-block;"></span>NORMAL / HARD / ELITE（難易度別モード）</li>
+      <li style="font-size:12px;color:rgba(245,240,232,0.6);padding:5px 0;display:flex;gap:8px;align-items:flex-start;"><span style="width:4px;height:4px;background:#C9A84C;border-radius:50%;flex-shrink:0;margin-top:8px;display:inline-block;"></span>90日間練習ヒートマップ</li>
+      <li style="font-size:12px;color:rgba(245,240,232,0.6);padding:5px 0;display:flex;gap:8px;align-items:flex-start;"><span style="width:4px;height:4px;background:#C9A84C;border-radius:50%;flex-shrink:0;margin-top:8px;display:inline-block;"></span>タイトル・バッジシステム（ROOKIE→PRO）</li>
+      <li style="font-size:12px;color:rgba(245,240,232,0.6);padding:5px 0;display:flex;gap:8px;align-items:flex-start;"><span style="width:4px;height:4px;background:#C9A84C;border-radius:50%;flex-shrink:0;margin-top:8px;display:inline-block;"></span>UNLEASHプランで全機能解放</li>
+    </ul>
+    <div class="app-scroll">
+      <div class="app-frame"><img src="IMG_9493.jpg" alt="ASCENT Practice アプリ画面"></div>
+      <div class="app-frame"><img src="IMG_9494.jpg" alt="ASCENT Practice アプリ画面"></div>
+      <div class="app-frame"><img src="IMG_9495.jpg" alt="ASCENT Practice アプリ画面"></div>
+    </div>
+    <p class="photo-caption">実際のASCENT Practice画面</p>
+    <a href="https://practice.stepbystep-ascent.com" class="sol-link" target="_blank" rel="noopener noreferrer">ASCENT Practiceを見る →</a>
   </div>
 
   <!-- CTA③: HOW IT WORKS後 -->
