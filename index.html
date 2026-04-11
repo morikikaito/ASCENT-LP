@@ -1844,12 +1844,12 @@ ASCENTを作った。
       <li style="font-size:12px;color:rgba(245,240,232,0.6);padding:5px 0;display:flex;gap:8px;align-items:flex-start;"><span style="width:4px;height:4px;background:#C9A84C;border-radius:50%;flex-shrink:0;margin-top:8px;display:inline-block;"></span>タイトル・バッジシステム（ROOKIE→PRO）</li>
       <li style="font-size:12px;color:rgba(245,240,232,0.6);padding:5px 0;display:flex;gap:8px;align-items:flex-start;"><span style="width:4px;height:4px;background:#C9A84C;border-radius:50%;flex-shrink:0;margin-top:8px;display:inline-block;"></span>UNLEASHプランで全機能解放</li>
     </ul>
-    <div class="app-scroll">
+    <div class="app-scroll" style="margin-left:-24px;margin-right:-24px;padding-left:24px;padding-right:24px;">
       <div class="app-frame"><img src="IMG_9493.jpg" alt="ASCENT Practice アプリ画面"></div>
       <div class="app-frame"><img src="IMG_9494.jpg" alt="ASCENT Practice アプリ画面"></div>
       <div class="app-frame"><img src="IMG_9495.jpg" alt="ASCENT Practice アプリ画面"></div>
     </div>
-    <p class="photo-caption">実際のASCENT Practice画面</p>
+    <p class="photo-caption">← スワイプして確認　実際のASCENT Practice画面</p>
     <a href="https://practice.stepbystep-ascent.com" class="sol-link" target="_blank" rel="noopener noreferrer">ASCENT Practiceを見る →</a>
   </div>
 
@@ -2416,23 +2416,18 @@ trackEvent('page_view', {});
   }
 })();
 
-// 48h Countdown Timer
-(function() {
-  var TIMER_KEY = 'ascent_campaign_end';
+// 48h Countdown Timer – 購入LPと同一の固定日時
+var CAMPAIGN_START_LP = '2026-04-15T21:00:00+09:00';
+(function(){
+  var startDate = new Date(CAMPAIGN_START_LP);
+  var endDate = new Date(startDate.getTime() + 48 * 60 * 60 * 1000);
   var el = document.getElementById('campaignTimer');
-  if (!el) return;
-  var end = localStorage.getItem(TIMER_KEY);
-  if (!end) {
-    end = Date.now() + 48 * 60 * 60 * 1000;
-    localStorage.setItem(TIMER_KEY, end);
-  }
-  end = parseInt(end, 10);
-  function update() {
-    var diff = end - Date.now();
-    if (diff <= 0) {
-      el.textContent = 'このキャンペーンは終了しました';
-      return;
-    }
+  if(!el) return;
+  function update(){
+    var now = new Date();
+    if(now < startDate){ el.textContent = 'まもなくキャンペーン開始'; return; }
+    var diff = endDate - now;
+    if(diff <= 0){ el.textContent = 'このキャンペーンは終了しました'; return; }
     var h = Math.floor(diff / 3600000);
     var m = Math.floor((diff % 3600000) / 60000);
     var s = Math.floor((diff % 60000) / 1000);
