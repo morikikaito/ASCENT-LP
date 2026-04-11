@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>無料シュート診断 実施中 | ASCENT</title>
 <meta name="description" content="動画を送るだけ。¥0。AIが骨格を解析します。月額¥4,980。">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YDTC8ECY4R"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-YDTC8ECY4R');</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;700;900&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
@@ -2217,6 +2219,63 @@ document.querySelectorAll('.acc-trigger').forEach(function(btn){
     }
   });
 });
+
+// Section離脱分析トラッキング
+(function(){
+  var sections = document.querySelectorAll('.hero, .empathy-section, .hero-journey, .section-light, .indicators, .section-dark, .section-cta, .how-it-works-v7, .value-stack, .credibility, .parent-section, .position-select, .faq-section, .narrow-section');
+  var sectionNames = ['hero','empathy','journey','problem','indicators','solution','cta-1','how-it-works','value-stack','credibility','parents','position','faq','final-offer'];
+  var seen = {};
+  var sectionTime = {};
+
+  var observer = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      var idx = Array.prototype.indexOf.call(sections, entry.target);
+      if(idx === -1) return;
+      var name = sectionNames[idx] || ('section-' + idx);
+
+      if(entry.isIntersecting){
+        sectionTime[name] = Date.now();
+        if(!seen[name]){
+          seen[name] = true;
+          gtag('event', 'section_view', {
+            section_name: name,
+            section_index: idx,
+            page: 'main_lp'
+          });
+        }
+      } else {
+        if(sectionTime[name]){
+          var duration = Math.round((Date.now() - sectionTime[name]) / 1000);
+          if(duration >= 2){
+            gtag('event', 'section_dwell', {
+              section_name: name,
+              dwell_seconds: duration,
+              page: 'main_lp'
+            });
+          }
+          delete sectionTime[name];
+        }
+      }
+    });
+  }, {threshold: 0.3});
+
+  sections.forEach(function(s){ observer.observe(s); });
+
+  var maxScroll = 0;
+  window.addEventListener('scroll', function(){
+    var pct = Math.round((window.scrollY + window.innerHeight) / document.body.scrollHeight * 100);
+    if(pct > maxScroll){
+      maxScroll = pct;
+      if(pct === 25 || pct === 50 || pct === 75 || pct === 100){
+        gtag('event', 'scroll_depth', { depth: pct, page: 'main_lp' });
+      }
+    }
+  });
+
+  window.addEventListener('beforeunload', function(){
+    gtag('event', 'exit_scroll', { max_depth: maxScroll, page: 'main_lp' });
+  });
+})();
 
 // 48h Countdown Timer
 (function() {

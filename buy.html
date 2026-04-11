@@ -115,11 +115,40 @@ h2 em{font-style:normal;color:var(--gold);}
 .cta-section p{font-size:14px;color:var(--text-muted);margin-bottom:16px;}
 
 /* ===== Credibility ===== */
-.cred{min-height:80vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 24px;position:relative;overflow:hidden;color:#F5F0E8;}
-.cred::before{content:'';position:absolute;inset:0;background:linear-gradient(rgba(5,5,7,0.45),rgba(5,5,7,0.45)),url('IMG_3446.jpeg');background-size:cover;background-position:center;z-index:0;}
-.cred-inner{position:relative;z-index:1;text-align:center;max-width:480px;width:100%;}
-.cred-name{font-family:'Cinzel',serif;font-size:16px;letter-spacing:0.1em;color:var(--gold);margin-bottom:8px;}
-.cred-title{font-size:12px;color:var(--text-muted);line-height:1.8;margin-bottom:24px;}
+.cred{min-height:100vh;display:flex;flex-direction:column;align-items:flex-end;justify-content:flex-end;padding:32px 24px;position:relative;overflow:hidden;color:#F5F0E8;}
+.cred::before{content:'';position:absolute;inset:0;background:linear-gradient(rgba(5,5,7,0.45),rgba(5,5,7,0.45)),url('IMG_3413.jpeg');background-size:cover;background-position:center top;z-index:0;}
+.cred-inner{position:relative;z-index:1;text-align:right;max-width:360px;width:100%;}
+.cred-profile{background:rgba(5,5,7,0.7);padding:24px 32px;margin-bottom:20px;}
+.cred-name{font-family:'Cinzel',serif;font-size:20px;letter-spacing:0.1em;color:var(--gold);margin-bottom:8px;}
+.cred-title{font-size:12px;color:#F5F0E8;line-height:1.8;margin-bottom:0;}
+/* Cred graphs */
+.cred-graphs{text-align:left;}
+.cred-graph{background:#13131F;border:1px solid rgba(201,168,76,0.2);border-radius:8px;padding:24px;margin-bottom:12px;}
+.cred-graph h3{font-size:13px;font-weight:700;color:var(--text);margin-bottom:16px;line-height:1.6;}
+.cred-graph .caption{font-size:11px;color:var(--text-muted);margin-top:10px;}
+.cred-graph .cite{font-size:10px;color:rgba(245,240,232,0.3);margin-top:6px;}
+/* Bar chart shared */
+.chart-bars{display:flex;align-items:flex-end;justify-content:center;gap:32px;height:160px;margin-bottom:8px;}
+.chart-bar-col{display:flex;flex-direction:column;align-items:center;gap:6px;}
+.chart-bar-val{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--text);}
+.chart-bar-col.gold .chart-bar-val{color:var(--gold);}
+.chart-bar{width:52px;border-radius:3px 3px 0 0;transition:height 1s ease;height:0;}
+.chart-bar-col.grey .chart-bar{background:rgba(245,240,232,0.2);}
+.chart-bar-col.gold .chart-bar{background:var(--gold);}
+.chart-bar-label{font-size:11px;color:var(--text-muted);}
+.chart-diff{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--gold);font-weight:600;text-align:center;margin-top:6px;}
+.chart-bar-col.animate .chart-bar{height:var(--h);}
+/* Line chart */
+.chart-line{position:relative;height:160px;}
+.chart-line svg{width:100%;height:100%;}
+.chart-line .ax{font-size:10px;fill:rgba(245,240,232,0.35);}
+.chart-line .axv{font-size:10px;fill:rgba(245,240,232,0.3);text-anchor:end;}
+.chart-line .dl{stroke:rgba(245,240,232,0.6);stroke-width:2;fill:none;stroke-dasharray:400;stroke-dashoffset:400;transition:stroke-dashoffset 1.5s ease;}
+.chart-line.animate .dl{stroke-dashoffset:0;}
+.chart-line .d{fill:rgba(245,240,232,0.6);}
+.chart-line .de{fill:var(--gold);}
+.chart-line .vl{font-family:'Cormorant Garamond',serif;font-size:14px;fill:var(--text);font-weight:600;}
+.chart-line .gl{stroke:rgba(245,240,232,0.06);stroke-width:1;}
 .research{background:#13131F;padding:24px;border-radius:8px;text-align:left;margin-top:24px;font-size:13px;color:var(--text-muted);line-height:2;}
 .research .num{font-family:'Cormorant Garamond',serif;font-size:24px;color:var(--gold);font-weight:600;}
 .research .cite{font-size:11px;color:rgba(245,240,232,0.35);margin-top:8px;}
@@ -382,23 +411,90 @@ h2 em{font-style:normal;color:var(--gold);}
 </section>
 
 <!-- [10] Credibility -->
-<section class="cred reveal">
-  <div class="cred-inner">
-  <div class="section-label">CREDIBILITY</div>
-  <div class="cred-name">KAITO MORIKI</div>
-  <div class="cred-title">
-    SANJO BEATERSプロ3x3バスケットボール選手<br>
-    Step By Step ASCENT 代表・開発者
+<!-- [10] Credibility -->
+<div class="reveal" style="position:relative;">
+  <img src="IMG_3413.jpeg" alt="森木開斗 SANJO BEATERS プロ3x3バスケ選手" style="width:100%;display:block;">
+  <div style="position:absolute;bottom:24px;right:24px;background:rgba(5,5,7,0.75);padding:20px 24px;text-align:right;max-width:320px;">
+    <div class="section-label" style="margin-bottom:10px;">CREDIBILITY</div>
+    <div class="cred-name">KAITO MORIKI</div>
+    <div class="cred-title" style="margin-bottom:0;">
+      SANJO BEATERSプロ3x3バスケットボール選手<br>
+      Step By Step ASCENT 代表・開発者
+    </div>
   </div>
+</div>
 
-  <div class="research">
-    <p>男子高校生を対象にした研究では、正しいフィードバックで6週間（週3回）シュート成功率が<span class="num">10%</span>以上向上したことが確認されています。</p>
-    <p class="cite">Oktariza et al., 2019 / ERIC</p>
-  </div>
-  <div class="research" style="margin-top:12px;">
-    <p>感覚で繰り返すだけでは、NBAでさえ50年間で<span class="num">+1.8%</span>しか改善されていません。</p>
-    <p class="cite">Stefani &amp; Siegrist, 2022 / SAGE Journals</p>
-  </div>
+<!-- Credibility Graphs -->
+<section class="section-dark" style="padding:40px 20px;">
+  <div style="max-width:640px;margin:0 auto;" class="cred-graphs">
+
+    <!-- Graph 1: Bar (shooting %) -->
+    <div class="cred-graph reveal" id="credBar1">
+      <h3>正しいフィードバックで、<br>シュート成功率が変わる</h3>
+      <div class="chart-bars">
+        <div class="chart-bar-col grey">
+          <div class="chart-bar-val">47.8%</div>
+          <div class="chart-bar" style="--h:80px;"></div>
+          <div class="chart-bar-label">トレーニング前</div>
+        </div>
+        <div class="chart-bar-col gold">
+          <div class="chart-bar-val">58.0%</div>
+          <div class="chart-bar" style="--h:130px;"></div>
+          <div class="chart-bar-label">6週間後</div>
+        </div>
+      </div>
+      <div class="chart-diff">+10.22%</div>
+      <p class="caption">男子高校生対象・6週間・週3回のトレーニング</p>
+      <p class="cite">Oktariza et al., 2019 / ERIC</p>
+    </div>
+
+    <!-- Graph 2: Line (NBA 50yr) -->
+    <div class="cred-graph reveal" id="credLine">
+      <h3>感覚で繰り返すだけでは、<br>NBAでさえ50年間ほぼ変化なし</h3>
+      <div class="chart-line">
+        <svg viewBox="0 0 400 160" preserveAspectRatio="xMidYMid meet">
+          <line x1="50" y1="15" x2="370" y2="15" class="gl"/>
+          <line x1="50" y1="55" x2="370" y2="55" class="gl"/>
+          <line x1="50" y1="95" x2="370" y2="95" class="gl"/>
+          <line x1="50" y1="135" x2="370" y2="135" class="gl"/>
+          <text x="45" y="19" class="axv">80%</text>
+          <text x="45" y="59" class="axv">78%</text>
+          <text x="45" y="99" class="axv">76%</text>
+          <text x="45" y="139" class="axv">74%</text>
+          <text x="70" y="155" class="ax" text-anchor="middle">1969</text>
+          <text x="210" y="155" class="ax" text-anchor="middle">1990</text>
+          <text x="350" y="155" class="ax" text-anchor="middle">2019</text>
+          <polyline points="70,103 210,87 350,69" class="dl"/>
+          <circle cx="70" cy="103" r="4" class="d"/>
+          <circle cx="210" cy="87" r="4" class="d"/>
+          <circle cx="350" cy="69" r="5" class="de"/>
+          <text x="70" y="93" class="vl" text-anchor="middle">75.6%</text>
+          <text x="350" y="59" class="vl" text-anchor="middle">77.4%</text>
+        </svg>
+      </div>
+      <p class="caption">NBA全選手50年間のフリースロー成功率推移</p>
+      <p class="cite">Stefani &amp; Siegrist, 2022 / SAGE Journals</p>
+    </div>
+
+    <!-- Graph 3: Bar (8-week comparison) -->
+    <div class="cred-graph reveal" id="credBar2">
+      <h3>正しいフィードバックありvsなし：<br>8週間の差</h3>
+      <div class="chart-bars">
+        <div class="chart-bar-col grey">
+          <div class="chart-bar-val">±0%</div>
+          <div class="chart-bar" style="--h:4px;"></div>
+          <div class="chart-bar-label">通常練習のみ</div>
+        </div>
+        <div class="chart-bar-col gold">
+          <div class="chart-bar-val">+5.0%</div>
+          <div class="chart-bar" style="--h:120px;"></div>
+          <div class="chart-bar-label">フィードバックあり</div>
+        </div>
+      </div>
+      <p class="caption">8週間のシュート成功率変化</p>
+      <p class="cite">Sajjadi et al., 2026 / Frontiers in Psychology</p>
+    </div>
+
   </div>
 </section>
 
@@ -508,30 +604,118 @@ if(fixedCta){
   });
 }
 
-// 48h Countdown Timer (21:00 fixed start)
+// Section離脱分析トラッキング
 (function(){
-  function getEndTime(){
-    var now=new Date();
-    var start=new Date();
-    start.setHours(21,0,0,0);
-    if(now<start){return null;}
-    return new Date(start.getTime()+48*60*60*1000);
-  }
+  var sections = document.querySelectorAll('.hero, .section-dark.reveal, .story, .cta-section, .final, .footer');
+  var sectionNames = ['hero','empathy','story','solution','how-it-works','value-stack','plans','risk-free-cta','credibility','parents','faq','final-cta','footer'];
+  var seen = {};
+  var sectionTime = {};
+
+  var observer = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      var idx = Array.prototype.indexOf.call(sections, entry.target);
+      if(idx === -1) return;
+      var name = sectionNames[idx] || ('section-' + idx);
+
+      if(entry.isIntersecting){
+        sectionTime[name] = Date.now();
+        if(!seen[name]){
+          seen[name] = true;
+          gtag('event', 'section_view', {
+            section_name: name,
+            section_index: idx,
+            page: 'buy_lp'
+          });
+        }
+      } else {
+        if(sectionTime[name]){
+          var duration = Math.round((Date.now() - sectionTime[name]) / 1000);
+          if(duration >= 2){
+            gtag('event', 'section_dwell', {
+              section_name: name,
+              dwell_seconds: duration,
+              page: 'buy_lp'
+            });
+          }
+          delete sectionTime[name];
+        }
+      }
+    });
+  }, {threshold: 0.3});
+
+  sections.forEach(function(s){ observer.observe(s); });
+
+  var maxScroll = 0;
+  window.addEventListener('scroll', function(){
+    var pct = Math.round((window.scrollY + window.innerHeight) / document.body.scrollHeight * 100);
+    if(pct > maxScroll){
+      maxScroll = pct;
+      if(pct === 25 || pct === 50 || pct === 75 || pct === 100){
+        gtag('event', 'scroll_depth', { depth: pct, page: 'buy_lp' });
+      }
+    }
+  });
+
+  window.addEventListener('beforeunload', function(){
+    gtag('event', 'exit_scroll', { max_depth: maxScroll, page: 'buy_lp' });
+  });
+})();
+
+// 48h Countdown Timer
+// ★公開時にこの日時を変更する（日本時間）★
+// 例: 2026年4月15日 21:00に公開する場合 → '2026-04-15T21:00:00+09:00'
+var CAMPAIGN_START = '2026-04-15T21:00:00+09:00';
+
+(function(){
+  var startDate = new Date(CAMPAIGN_START);
+  var endDate = new Date(startDate.getTime() + 48 * 60 * 60 * 1000);
+
   function updateTimer(){
-    var end=getEndTime();
-    var els=document.querySelectorAll('#heroTimer,#finalTimer');
-    if(!end){els.forEach(function(el){el.textContent='本日21:00よりキャンペーン開始';});return;}
-    var diff=end-new Date();
-    if(diff<=0){els.forEach(function(el){el.textContent='このキャンペーンは終了しました';});return;}
-    var h=Math.floor(diff/3600000);
-    var m=Math.floor((diff%3600000)/60000);
-    var s=Math.floor((diff%60000)/1000);
-    var t='残り '+h+'時間 '+('0'+m).slice(-2)+'分 '+('0'+s).slice(-2)+'秒';
-    els.forEach(function(el){el.textContent=t;});
+    var now = new Date();
+    var els = document.querySelectorAll('#heroTimer,#finalTimer');
+
+    if(now < startDate){
+      els.forEach(function(el){ el.textContent = 'まもなくキャンペーン開始'; });
+      return;
+    }
+
+    var diff = endDate - now;
+    if(diff <= 0){
+      els.forEach(function(el){ el.textContent = 'このキャンペーンは終了しました'; });
+      return;
+    }
+
+    var h = Math.floor(diff / 3600000);
+    var m = Math.floor((diff % 3600000) / 60000);
+    var s = Math.floor((diff % 60000) / 1000);
+    var t = '残り ' + h + '時間 ' + ('0'+m).slice(-2) + '分 ' + ('0'+s).slice(-2) + '秒';
+    els.forEach(function(el){ el.textContent = t; });
   }
+
   updateTimer();
-  setInterval(updateTimer,1000);
-  setInterval(function(){updateTimer();},60*60*1000);
+  setInterval(updateTimer, 1000);
+})();
+
+// Chart scroll animations
+(function(){
+  var co=new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(!e.isIntersecting)return;
+      // Bar charts
+      if(e.target.id==='credBar1'||e.target.id==='credBar2'){
+        e.target.querySelectorAll('.chart-bar-col').forEach(function(c){c.classList.add('animate');});
+      }
+      // Line chart
+      if(e.target.id==='credLine'){
+        e.target.querySelector('.chart-line').classList.add('animate');
+      }
+      co.unobserve(e.target);
+    });
+  },{threshold:0.3});
+  ['credBar1','credLine','credBar2'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(el)co.observe(el);
+  });
 })();
 </script>
 </body>
