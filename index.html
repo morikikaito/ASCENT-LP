@@ -2220,7 +2220,31 @@ document.querySelectorAll('.acc-trigger').forEach(function(btn){
   });
 });
 
-// Section離脱分析トラッキング
+// ASCENT Analytics
+var ANALYTICS_URL = 'https://ascent-analytics.moriki-beaters.workers.dev/track';
+var PAGE_ID = 'main_lp';
+var eventQueue = [];
+var flushTimer = null;
+
+function trackEvent(name, data) {
+  data.event = name;
+  data.page = PAGE_ID;
+  gtag('event', name, data);
+  eventQueue.push(data);
+  if(flushTimer) clearTimeout(flushTimer);
+  flushTimer = setTimeout(flushEvents, 3000);
+}
+
+function flushEvents() {
+  if(eventQueue.length === 0) return;
+  var batch = eventQueue.slice();
+  eventQueue = [];
+  navigator.sendBeacon(ANALYTICS_URL, JSON.stringify(batch));
+}
+
+trackEvent('page_view', {});
+
+// Section離脱分析
 (function(){
   var sections = document.querySelectorAll('.hero, .empathy-section, .hero-journey, .section-light, .indicators, .section-dark, .section-cta, .how-it-works-v7, .value-stack, .credibility, .parent-section, .position-select, .faq-section, .narrow-section');
   var sectionNames = ['hero','empathy','journey','problem','indicators','solution','cta-1','how-it-works','value-stack','credibility','parents','position','faq','final-offer'];
@@ -2232,33 +2256,21 @@ document.querySelectorAll('.acc-trigger').forEach(function(btn){
       var idx = Array.prototype.indexOf.call(sections, entry.target);
       if(idx === -1) return;
       var name = sectionNames[idx] || ('section-' + idx);
-
       if(entry.isIntersecting){
         sectionTime[name] = Date.now();
         if(!seen[name]){
           seen[name] = true;
-          gtag('event', 'section_view', {
-            section_name: name,
-            section_index: idx,
-            page: 'main_lp'
-          });
+          trackEvent('section_view', { section_name: name, section_index: idx });
         }
-      } else {
-        if(sectionTime[name]){
-          var duration = Math.round((Date.now() - sectionTime[name]) / 1000);
-          if(duration >= 2){
-            gtag('event', 'section_dwell', {
-              section_name: name,
-              dwell_seconds: duration,
-              page: 'main_lp'
-            });
-          }
-          delete sectionTime[name];
+      } else if(sectionTime[name]){
+        var duration = Math.round((Date.now() - sectionTime[name]) / 1000);
+        if(duration >= 2){
+          trackEvent('section_dwell', { section_name: name, dwell_seconds: duration });
         }
+        delete sectionTime[name];
       }
     });
   }, {threshold: 0.3});
-
   sections.forEach(function(s){ observer.observe(s); });
 
   var maxScroll = 0;
@@ -2267,13 +2279,14 @@ document.querySelectorAll('.acc-trigger').forEach(function(btn){
     if(pct > maxScroll){
       maxScroll = pct;
       if(pct === 25 || pct === 50 || pct === 75 || pct === 100){
-        gtag('event', 'scroll_depth', { depth: pct, page: 'main_lp' });
+        trackEvent('scroll_depth', { depth: pct });
       }
     }
   });
 
   window.addEventListener('beforeunload', function(){
-    gtag('event', 'exit_scroll', { max_depth: maxScroll, page: 'main_lp' });
+    trackEvent('exit_scroll', { max_depth: maxScroll });
+    flushEvents();
   });
 })();
 
@@ -2288,9 +2301,9 @@ document.querySelectorAll('.acc-trigger').forEach(function(btn){
       var plan = 'unleash';
       if(href.includes('f7i0A')) plan = 'lite';
       if(href.includes('f7i0C')) plan = 'pro';
-      gtag('event', 'cta_click', { cta_type: 'stripe', plan: plan, cta_text: text, page: 'main_lp' });
+      trackEvent('cta_click', { cta_type: 'stripe', plan: plan, cta_text: text });
     } else if(href.includes('lin.ee')){
-      gtag('event', 'cta_click', { cta_type: 'line', cta_text: text, page: 'main_lp' });
+      trackEvent('cta_click', { cta_type: 'line', cta_text: text });
     }
   });
 })();
@@ -2304,7 +2317,7 @@ document.querySelectorAll('.acc-trigger').forEach(function(btn){
     origToggle(btn);
     if(!wasOpen){
       var question = (btn.textContent || '').replace(/[＋+]/g, '').trim().substring(0, 50);
-      gtag('event', 'faq_open', { question: question, page: 'main_lp' });
+      trackEvent('faq_open', { question: question });
     }
   };
 })();
@@ -2323,7 +2336,7 @@ document.querySelectorAll('.acc-trigger').forEach(function(btn){
       } else if(planTime[name]){
         var dur = Math.round((Date.now() - planTime[name]) / 1000);
         if(dur >= 2){
-          gtag('event', 'plan_dwell', { plan: name, dwell_seconds: dur, page: 'main_lp' });
+          trackEvent('plan_dwell', { plan: name, dwell_seconds: dur });
         }
         delete planTime[name];
       }
@@ -2335,15 +2348,12 @@ document.querySelectorAll('.acc-trigger').forEach(function(btn){
 // UTM流入元記録
 (function(){
   var params = new URLSearchParams(window.location.search);
-  var utm_source = params.get('utm_source');
-  var utm_medium = params.get('utm_medium');
-  var utm_campaign = params.get('utm_campaign');
-  if(utm_source){
-    gtag('event', 'traffic_source', {
-      source: utm_source,
-      medium: utm_medium || 'none',
-      campaign: utm_campaign || 'none',
-      page: 'main_lp'
+  var src = params.get('utm_source');
+  if(src){
+    trackEvent('traffic_source', {
+      source: src,
+      medium: params.get('utm_medium') || 'none',
+      campaign: params.get('utm_campaign') || 'none'
     });
   }
 })();

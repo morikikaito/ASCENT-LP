@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASCENT Analytics</title>
+<style>
+:root{--bg:#050507;--card:#0d0d12;--gold:#C9A84C;--text:#F5F0E8;--muted:rgba(245,240,232,0.5);--border:rgba(201,168,76,0.2);--green:#4ade80;--red:#f87171;--blue:#60a5fa;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'Noto Serif JP',-apple-system,sans-serif;font-size:14px;line-height:1.6;padding:0 0 80px;}
+.login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;}
+.login-box{background:var(--card);border:1px solid var(--border);padding:40px 32px;max-width:360px;width:100%;text-align:center;}
+.login-box h1{font-size:18px;color:var(--gold);margin-bottom:24px;letter-spacing:0.1em;}
+.login-box input{width:100%;padding:12px 16px;background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--text);font-size:16px;outline:none;margin-bottom:16px;}
+.login-box button{width:100%;padding:12px;background:var(--gold);color:#050507;border:none;font-weight:700;font-size:14px;cursor:pointer;}
+.login-box .error{color:var(--red);font-size:12px;margin-top:8px;display:none;}
+
+.dash{display:none;max-width:640px;margin:0 auto;padding:20px 16px;}
+.dash-header{display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-bottom:1px solid var(--border);margin-bottom:20px;}
+.dash-header h1{font-size:16px;color:var(--gold);}
+.dash-header select{background:var(--card);color:var(--text);border:1px solid var(--border);padding:6px 12px;font-size:13px;}
+
+.card{background:var(--card);border:1px solid var(--border);padding:20px;margin-bottom:12px;}
+.card-title{font-size:11px;color:var(--gold);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:12px;font-weight:600;}
+.stat-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04);}
+.stat-row:last-child{border-bottom:none;}
+.stat-label{color:var(--muted);font-size:13px;}
+.stat-value{font-size:15px;font-weight:600;}
+.stat-value.gold{color:var(--gold);}
+
+.bar-container{margin:6px 0;}
+.bar-bg{background:rgba(255,255,255,0.06);height:24px;position:relative;margin-bottom:4px;}
+.bar-fill{height:100%;position:absolute;left:0;top:0;transition:width 0.5s;}
+.bar-fill.gold{background:rgba(201,168,76,0.6);}
+.bar-fill.blue{background:rgba(96,165,250,0.5);}
+.bar-label{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);}
+
+.tab-bar{display:flex;gap:0;margin-bottom:16px;}
+.tab-bar button{flex:1;padding:10px;background:var(--card);border:1px solid var(--border);color:var(--muted);font-size:12px;cursor:pointer;font-family:inherit;}
+.tab-bar button.active{background:rgba(201,168,76,0.1);color:var(--gold);border-color:var(--gold);}
+
+.empty{text-align:center;color:var(--muted);padding:40px 0;font-size:13px;}
+.loading{text-align:center;color:var(--gold);padding:60px 0;}
+</style>
+</head>
+<body>
+
+<div class="login" id="loginScreen">
+  <div class="login-box">
+    <h1>ASCENT ANALYTICS</h1>
+    <input type="password" id="pwInput" placeholder="パスワード">
+    <button onclick="doLogin()">ログイン</button>
+    <div class="error" id="loginError">パスワードが違います</div>
+  </div>
+</div>
+
+<div class="dash" id="dashScreen">
+  <div class="dash-header">
+    <h1>ASCENT ANALYTICS</h1>
+    <select id="rangeSelect" onchange="loadData()">
+      <option value="1">今日</option>
+      <option value="7" selected>7日間</option>
+      <option value="30">30日間</option>
+    </select>
+  </div>
+
+  <div class="tab-bar">
+    <button class="active" onclick="switchTab('overview',this)">概要</button>
+    <button onclick="switchTab('sections',this)">セクション</button>
+    <button onclick="switchTab('cta',this)">CTA</button>
+    <button onclick="switchTab('faq',this)">FAQ</button>
+    <button onclick="switchTab('plans',this)">プラン</button>
+  </div>
+
+  <div id="content"><div class="loading">読み込み中...</div></div>
+</div>
+
+<script>
+var API = 'https://ascent-analytics.moriki-beaters.workers.dev/api/data';
+var password = '';
+var rawData = {};
+
+function doLogin(){
+  password = document.getElementById('pwInput').value;
+  fetch(API + '?pw=' + encodeURIComponent(password) + '&range=1')
+    .then(function(r){
+      if(r.status === 401){
+        document.getElementById('loginError').style.display = 'block';
+        return;
+      }
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('dashScreen').style.display = 'block';
+      loadData();
+    });
+}
+
+document.getElementById('pwInput').addEventListener('keydown', function(e){
+  if(e.key === 'Enter') doLogin();
+});
+
+function loadData(){
+  var range = document.getElementById('rangeSelect').value;
+  document.getElementById('content').innerHTML = '<div class="loading">読み込み中...</div>';
+  fetch(API + '?pw=' + encodeURIComponent(password) + '&range=' + range)
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      rawData = data;
+      switchTab('overview', document.querySelector('.tab-bar button.active'));
+    });
+}
+
+function switchTab(tab, btn){
+  document.querySelectorAll('.tab-bar button').forEach(function(b){ b.classList.remove('active'); });
+  if(btn) btn.classList.add('active');
+  var el = document.getElementById('content');
+
+  var merged = mergeData(rawData);
+  if(!merged){
+    el.innerHTML = '<div class="empty">データがまだありません。<br>LPにアクセスがあると表示されます。</div>';
+    return;
+  }
+
+  if(tab === 'overview') el.innerHTML = renderOverview(merged);
+  if(tab === 'sections') el.innerHTML = renderSections(merged);
+  if(tab === 'cta') el.innerHTML = renderCTA(merged);
+  if(tab === 'faq') el.innerHTML = renderFAQ(merged);
+  if(tab === 'plans') el.innerHTML = renderPlans(merged);
+}
+
+function mergeData(data){
+  var days = Object.keys(data);
+  if(days.length === 0) return null;
+  var m = { section_views:{}, section_dwells:{}, scroll_depths:{}, exit_scrolls:[], cta_clicks:[], faq_opens:{}, plan_dwells:{}, traffic_sources:{}, total_visits:0, pages:{} };
+  days.forEach(function(d){
+    var day = data[d];
+    m.total_visits += (day.total_visits || 0);
+    Object.keys(day.section_views || {}).forEach(function(k){ m.section_views[k] = (m.section_views[k]||0) + day.section_views[k]; });
+    Object.keys(day.section_dwells || {}).forEach(function(k){
+      if(!m.section_dwells[k]) m.section_dwells[k] = [];
+      m.section_dwells[k] = m.section_dwells[k].concat(day.section_dwells[k]);
+    });
+    Object.keys(day.scroll_depths || {}).forEach(function(k){ m.scroll_depths[k] = (m.scroll_depths[k]||0) + day.scroll_depths[k]; });
+    m.exit_scrolls = m.exit_scrolls.concat(day.exit_scrolls || []);
+    m.cta_clicks = m.cta_clicks.concat(day.cta_clicks || []);
+    Object.keys(day.faq_opens || {}).forEach(function(k){ m.faq_opens[k] = (m.faq_opens[k]||0) + day.faq_opens[k]; });
+    Object.keys(day.plan_dwells || {}).forEach(function(k){
+      if(!m.plan_dwells[k]) m.plan_dwells[k] = [];
+      m.plan_dwells[k] = m.plan_dwells[k].concat(day.plan_dwells[k]);
+    });
+    Object.keys(day.traffic_sources || {}).forEach(function(k){ m.traffic_sources[k] = (m.traffic_sources[k]||0) + day.traffic_sources[k]; });
+  });
+  return m;
+}
+
+function avg(arr){
+  if(!arr || arr.length === 0) return 0;
+  return Math.round(arr.reduce(function(a,b){return a+b;},0) / arr.length);
+}
+
+function renderOverview(d){
+  var avgExit = d.exit_scrolls.length > 0 ? Math.round(d.exit_scrolls.reduce(function(a,b){return a+b.depth;},0) / d.exit_scrolls.length) : 0;
+  var stripeClicks = d.cta_clicks.filter(function(c){return c.type==='stripe';}).length;
+  var lineClicks = d.cta_clicks.filter(function(c){return c.type==='line';}).length;
+
+  var html = '<div class="card"><div class="card-title">アクセス</div>';
+  html += statRow('総アクセス数', d.total_visits, 'gold');
+  html += statRow('平均離脱地点', avgExit + '%');
+  html += statRow('Stripeクリック', stripeClicks, 'gold');
+  html += statRow('LINEクリック', lineClicks);
+  html += '</div>';
+
+  html += '<div class="card"><div class="card-title">スクロール到達率</div>';
+  ['25','50','75','100'].forEach(function(d2){
+    var mainCount = d.scroll_depths['main_lp:'+d2] || 0;
+    var buyCount = d.scroll_depths['buy_lp:'+d2] || 0;
+    var total = mainCount + buyCount;
+    var pct = d.total_visits > 0 ? Math.round(total / d.total_visits * 100) : 0;
+    html += '<div class="bar-container"><div class="bar-label"><span>' + d2 + '%到達</span><span>' + total + '人 (' + pct + '%)</span></div><div class="bar-bg"><div class="bar-fill gold" style="width:' + pct + '%"></div></div></div>';
+  });
+  html += '</div>';
+
+  if(Object.keys(d.traffic_sources).length > 0){
+    html += '<div class="card"><div class="card-title">流入元</div>';
+    Object.keys(d.traffic_sources).sort(function(a,b){return d.traffic_sources[b]-d.traffic_sources[a];}).forEach(function(k){
+      html += statRow(k, d.traffic_sources[k]);
+    });
+    html += '</div>';
+  }
+
+  return html;
+}
+
+function renderSections(d){
+  var pages = ['main_lp', 'buy_lp'];
+  var html = '';
+  pages.forEach(function(page){
+    var pageName = page === 'main_lp' ? '通常LP' : '購買LP';
+    var views = {};
+    Object.keys(d.section_views).forEach(function(k){
+      if(k.startsWith(page + ':')){
+        var name = k.replace(page + ':', '');
+        views[name] = d.section_views[k];
+      }
+    });
+    if(Object.keys(views).length === 0) return;
+
+    var maxViews = Math.max.apply(null, Object.values(views));
+    html += '<div class="card"><div class="card-title">' + pageName + ' セクション閲覧数</div>';
+    Object.keys(views).forEach(function(name){
+      var count = views[name];
+      var pct = maxViews > 0 ? Math.round(count / maxViews * 100) : 0;
+      var dwellKey = page + ':' + name;
+      var avgDwell = avg(d.section_dwells[dwellKey]);
+      html += '<div class="bar-container"><div class="bar-label"><span>' + name + '</span><span>' + count + '回 / 平均' + avgDwell + '秒</span></div><div class="bar-bg"><div class="bar-fill gold" style="width:' + pct + '%"></div></div></div>';
+    });
+    html += '</div>';
+  });
+  return html || '<div class="empty">セクションデータなし</div>';
+}
+
+function renderCTA(d){
+  if(d.cta_clicks.length === 0) return '<div class="empty">CTAクリックデータなし</div>';
+
+  var byText = {};
+  d.cta_clicks.forEach(function(c){
+    var key = (c.plan ? '[' + c.plan.toUpperCase() + '] ' : '') + (c.text || c.type);
+    if(!byText[key]) byText[key] = {count:0, type:c.type, plan:c.plan};
+    byText[key].count++;
+  });
+
+  var sorted = Object.keys(byText).sort(function(a,b){return byText[b].count - byText[a].count;});
+  var maxCount = byText[sorted[0]].count;
+
+  var html = '<div class="card"><div class="card-title">CTAクリック詳細</div>';
+  sorted.forEach(function(key){
+    var item = byText[key];
+    var pct = Math.round(item.count / maxCount * 100);
+    var color = item.type === 'stripe' ? 'gold' : 'blue';
+    html += '<div class="bar-container"><div class="bar-label"><span>' + key + '</span><span>' + item.count + '回</span></div><div class="bar-bg"><div class="bar-fill ' + color + '" style="width:' + pct + '%"></div></div></div>';
+  });
+  html += '</div>';
+
+  var stripeByPlan = {};
+  d.cta_clicks.filter(function(c){return c.type==='stripe';}).forEach(function(c){
+    var p = (c.plan || 'unknown').toUpperCase();
+    stripeByPlan[p] = (stripeByPlan[p] || 0) + 1;
+  });
+  if(Object.keys(stripeByPlan).length > 0){
+    html += '<div class="card"><div class="card-title">プラン別Stripeクリック</div>';
+    Object.keys(stripeByPlan).sort(function(a,b){return stripeByPlan[b]-stripeByPlan[a];}).forEach(function(p){
+      html += statRow(p, stripeByPlan[p], 'gold');
+    });
+    html += '</div>';
+  }
+
+  return html;
+}
+
+function renderFAQ(d){
+  var faqs = {};
+  Object.keys(d.faq_opens).forEach(function(k){
+    var q = k.replace(/^(main_lp|buy_lp):/, '');
+    faqs[q] = (faqs[q] || 0) + d.faq_opens[k];
+  });
+
+  if(Object.keys(faqs).length === 0) return '<div class="empty">FAQデータなし</div>';
+
+  var sorted = Object.keys(faqs).sort(function(a,b){return faqs[b]-faqs[a];});
+  var maxCount = faqs[sorted[0]];
+
+  var html = '<div class="card"><div class="card-title">FAQ開閉ランキング（不安の可視化）</div>';
+  sorted.forEach(function(q, i){
+    var pct = Math.round(faqs[q] / maxCount * 100);
+    html += '<div class="bar-container"><div class="bar-label"><span>' + (i+1) + '. ' + q + '</span><span>' + faqs[q] + '回</span></div><div class="bar-bg"><div class="bar-fill gold" style="width:' + pct + '%"></div></div></div>';
+  });
+  html += '</div>';
+  return html;
+}
+
+function renderPlans(d){
+  var plans = {};
+  Object.keys(d.plan_dwells).forEach(function(k){
+    var name = k.replace(/^(main_lp|buy_lp):/, '');
+    if(!plans[name]) plans[name] = [];
+    plans[name] = plans[name].concat(d.plan_dwells[k]);
+  });
+
+  if(Object.keys(plans).length === 0) return '<div class="empty">プランデータなし</div>';
+
+  var html = '<div class="card"><div class="card-title">プラン別 平均注目時間</div>';
+  ['LITE','UNLEASH','PRO'].forEach(function(name){
+    var arr = plans[name] || [];
+    var avgSec = avg(arr);
+    var views = arr.length;
+    var maxSec = 30;
+    var pct = Math.min(Math.round(avgSec / maxSec * 100), 100);
+    html += '<div class="bar-container"><div class="bar-label"><span>' + name + '</span><span>平均' + avgSec + '秒 / ' + views + '回表示</span></div><div class="bar-bg"><div class="bar-fill gold" style="width:' + pct + '%"></div></div></div>';
+  });
+  html += '</div>';
+  return html;
+}
+
+function statRow(label, value, cls){
+  return '<div class="stat-row"><span class="stat-label">' + label + '</span><span class="stat-value' + (cls ? ' ' + cls : '') + '">' + value + '</span></div>';
+}
+</script>
+</body>
+</html>
