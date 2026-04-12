@@ -112,12 +112,21 @@ Instagram（バイラル） → LINE登録 → [ここで断絶] → 購買
      役割：「観客」を「本気の改善希望者」に絞り込む
 
 【STEP 3】Trial（体験・意思確認）
-  └ trial.stepbystep-ascent.com での無料体験
+  └ practice.stepbystep-ascent.com/trial での無料体験
      役割：価値を体感させ、課金への心理障壁を除去する
 
-【STEP 4】購買（LITE/UNLEASH/PRO）
-  └ 体験後のフォローメッセージ → プラン選択
+【STEP 4】購買LP → 決済
+  └ stepbystep-ascent.com/buy（購買特化LP・カウントダウン付き）
+  └ Stripe決済リンク：
+     - LITE: https://buy.stripe.com/bJecN47bXc1E6xW183f7i0A
+     - UNLEASH: https://buy.stripe.com/28EcN47bXbeA8G4bMHf7i0B
+     - PRO: https://buy.stripe.com/aFaeVccwhbeAf4seYTf7i0C
 ```
+
+### LP分析（CDOが自動取得）
+- ダッシュボード: https://stepbystep-ascent.com/analytics
+- Analytics Worker: https://ascent-analytics.moriki-beaters.workers.dev
+- 追跡: section_view, scroll_depth, cta_click, faq_open, plan_dwell, traffic_source
 
 ### LINE登録直後シナリオ（要設計・現在未整備）
 

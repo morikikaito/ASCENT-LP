@@ -10,16 +10,20 @@
 - **サービス**: バスケシュート改善AI診断SaaS（中高生・保護者向け）
 - **プラン**: LITE ¥1,980 / UNLEASH ¥4,980 / PRO ¥9,980
 
-### AI経営チーム
+### AI経営チーム（v5 マルチエンジン）
 
-| 役職 | AI | 担当領域 |
-|------|-----|---------|
-| CMO | Claude | マーケティング戦略・LP・LINE配信文 |
-| CTO | Gemini | 技術戦略・システムアーキテクチャ |
-| CPO | Perplexity | プロダクト戦略・経営会議の実行 |
-| CTE | Claude Code | コード実装・デプロイ |
-| CDO | Manus | デザイン・UI/UX |
-| CKO | NotebookLM | ナレッジ管理・情報整理 |
+| 役職 | エンジン | 担当領域 | 接続先 |
+|------|---------|---------|--------|
+| CEO | Claude Code（Cursor） | 実務統括・戦略実行 | Cursor内 |
+| CMO | Claude Sonnet | マーケティング戦略・LP・LINE配信 | LINE Agent |
+| CTO | Gemini 2.5 Pro | 技術戦略・システム設計 | LINE Agent |
+| CPO | Tavily Web検索 → Claude | 市場調査・リアルタイム情報 | LINE Agent |
+| CDO | Analytics API → Claude | データ分析・KPI管理 | LINE Agent |
+
+Agent Worker: https://ascent-agent.moriki-beaters.workers.dev
+記録: Airtable永久保存（Base: approNTUIwA2HTRFO）
+
+エスカレーション: 部下→CEO→Kait
 
 ---
 
