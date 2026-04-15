@@ -778,61 +778,6 @@ body {
   flex-shrink: 0;
 }
 
-/* ━━━━━━━━━━━━━━━━━━
-   CAMPAIGN PRICING
-━━━━━━━━━━━━━━━━━━ */
-.price-regular {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 28px;
-  color: rgba(245,240,232,0.4);
-  text-decoration: line-through;
-  text-align: center;
-  margin-bottom: 4px;
-}
-.campaign-label {
-  font-family: 'Cinzel', serif;
-  font-size: 11px;
-  color: #C9A84C;
-  letter-spacing: 0.08em;
-  text-align: center;
-  margin-bottom: 2px;
-}
-.campaign-price {
-  display: flex;
-  align-items: baseline;
-  justify-content: center;
-  gap: 4px;
-  margin-bottom: 4px;
-}
-.campaign-price .currency {
-  font-family: 'Cinzel', serif;
-  font-size: 16px;
-  color: #F5F0E8;
-}
-.campaign-price .amount {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 64px;
-  font-weight: 400;
-  line-height: 1;
-  color: #F5F0E8;
-}
-.campaign-sub {
-  font-size: 12px;
-  color: rgba(245,240,232,0.55);
-  text-align: center;
-  margin-bottom: 16px;
-}
-.countdown-timer {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 18px;
-  color: #C9A84C;
-  text-align: center;
-  background: #13131F;
-  padding: 10px 16px;
-  border-radius: 6px;
-  margin-bottom: 12px;
-  letter-spacing: 0.04em;
-}
 .guarantee-badge {
   display: flex;
   align-items: center;
@@ -1479,7 +1424,7 @@ footer {
 
 <!-- ━━━━ ANNOUNCEMENT BAR ━━━━ -->
 <div class="announcement-bar">
-  <div class="label">全額返金保証 ｜ 7日間返金保証 ｜ 初月17%OFF実施中</div>
+  <div class="label">全額返金保証 ｜ 7日間返金保証</div>
 </div>
 
 <!-- ━━━━ HERO / FV ━━━━ -->
@@ -1874,10 +1819,7 @@ ASCENTを作った。
   <div class="value-total"><span class="item">バラで揃えると</span><span class="price">¥9,920/月相当</span></div>
   <div class="value-ascent">
     <span class="item">ASCENT UNLEASH</span>
-    <span class="price" style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;">
-      <span style="font-size:13px;color:rgba(245,240,232,0.35);text-decoration:line-through;font-weight:400;">¥4,980/月</span>
-      <span>初月¥4,133</span>
-    </span>
+    <span class="price">¥4,980/月</span>
   </div>
 </section>
 
@@ -1918,14 +1860,11 @@ ASCENTを作った。
       <li>AIシュートSCAN診断</li>
       <li>月次パーソナルフィードバック（月1回）</li>
     </ul>
-    <div class="countdown-timer" id="campaignTimer"></div>
-    <div class="price-regular">¥4,980/月</div>
-    <div class="campaign-label">初月限定 17% OFF</div>
-    <div class="campaign-price">
+    <div class="plan-price">
       <span class="currency">¥</span>
-      <span class="amount">4,133</span>
+      <span class="amount">4,980</span>
+      <span class="per">/月</span>
     </div>
-    <div class="campaign-sub">2ヶ月目以降 ¥4,980/月</div>
     <a href="https://buy.stripe.com/28E28q0Nz3M87C0183f7i0E?prefilled_promo_code=ASCENT" class="btn-primary" target="_blank" rel="noopener noreferrer">7日間返金保証つきで試してみる</a>
     <div class="guarantee-badge"><span class="shield">🛡</span>7日間全額返金保証つき</div>
     <p style="font-size:11px;color:var(--text-muted);text-align:center;margin-top:8px;">PW：UNLEASH2026</p>
@@ -2416,26 +2355,6 @@ trackEvent('page_view', {});
   }
 })();
 
-// 48h Countdown Timer – 購入LPと同一の固定日時
-var CAMPAIGN_START_LP = '2099-12-31T23:59:59+09:00';
-(function(){
-  var startDate = new Date(CAMPAIGN_START_LP);
-  var endDate = new Date(startDate.getTime() + 48 * 60 * 60 * 1000);
-  var el = document.getElementById('campaignTimer');
-  if(!el) return;
-  function update(){
-    var now = new Date();
-    if(now < startDate){ el.textContent = 'まもなくキャンペーン開始'; return; }
-    var diff = endDate - now;
-    if(diff <= 0){ el.textContent = 'このキャンペーンは終了しました'; return; }
-    var h = Math.floor(diff / 3600000);
-    var m = Math.floor((diff % 3600000) / 60000);
-    var s = Math.floor((diff % 60000) / 1000);
-    el.textContent = '残り ' + h + '時間 ' + ('0'+m).slice(-2) + '分 ' + ('0'+s).slice(-2) + '秒';
-  }
-  update();
-  setInterval(update, 1000);
-})();
 
 // LP research chart bar animation
 (function(){
