@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASCENT Practice アナリティクス</title>
+<style>
+:root{--bg:#050507;--card:#0d0d12;--gold:#C9A84C;--text:#F5F0E8;--muted:rgba(245,240,232,0.5);--border:rgba(201,168,76,0.2);--green:#4ade80;--red:#f87171;--blue:#60a5fa;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'Noto Serif JP',-apple-system,sans-serif;font-size:14px;line-height:1.6;padding:0 0 80px;}
+.login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;}
+.login-box{background:var(--card);border:1px solid var(--border);padding:40px 32px;max-width:360px;width:100%;text-align:center;}
+.login-box h1{font-size:18px;color:var(--gold);margin-bottom:24px;letter-spacing:0.1em;}
+.login-box input{width:100%;padding:12px 16px;background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--text);font-size:16px;outline:none;margin-bottom:16px;}
+.login-box button{width:100%;padding:12px;background:var(--gold);color:#050507;border:none;font-weight:700;font-size:14px;cursor:pointer;}
+.login-box .error{color:var(--red);font-size:12px;margin-top:8px;display:none;}
+
+.dash{display:none;max-width:640px;margin:0 auto;padding:20px 16px;}
+.dash-header{display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-bottom:1px solid var(--border);margin-bottom:20px;}
+.dash-header h1{font-size:16px;color:var(--gold);}
+.dash-header select{background:var(--card);color:var(--text);border:1px solid var(--border);padding:6px 12px;font-size:13px;}
+
+.card{background:var(--card);border:1px solid var(--border);padding:20px;margin-bottom:12px;}
+.card-title{font-size:11px;color:var(--gold);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:12px;font-weight:600;}
+.stat-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04);}
+.stat-row:last-child{border-bottom:none;}
+.stat-label{color:var(--muted);font-size:13px;}
+.stat-value{font-size:15px;font-weight:600;}
+.stat-value.gold{color:var(--gold);}
+.stat-value.green{color:var(--green);}
+.stat-value.red{color:var(--red);}
+
+.bar-container{margin:6px 0;}
+.bar-bg{background:rgba(255,255,255,0.06);height:24px;position:relative;margin-bottom:4px;}
+.bar-fill{height:100%;position:absolute;left:0;top:0;transition:width 0.5s;}
+.bar-fill.gold{background:rgba(201,168,76,0.6);}
+.bar-fill.blue{background:rgba(96,165,250,0.5);}
+.bar-fill.green{background:rgba(74,222,128,0.5);}
+.bar-label{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);}
+
+.tab-bar{display:flex;gap:0;margin-bottom:16px;}
+.tab-bar button{flex:1;padding:10px;background:var(--card);border:1px solid var(--border);color:var(--muted);font-size:12px;cursor:pointer;font-family:inherit;}
+.tab-bar button.active{background:rgba(201,168,76,0.1);color:var(--gold);border-color:var(--gold);}
+
+.nav-link{display:block;text-align:center;color:var(--muted);font-size:12px;margin-bottom:16px;text-decoration:none;}
+.nav-link:hover{color:var(--gold);}
+.empty{text-align:center;color:var(--muted);padding:40px 0;font-size:13px;}
+.loading{text-align:center;color:var(--gold);padding:60px 0;}
+.badge{display:inline-block;font-size:10px;padding:2px 8px;border-radius:10px;margin-left:6px;}
+.badge.green{background:rgba(74,222,128,0.15);color:var(--green);}
+.badge.red{background:rgba(248,113,113,0.15);color:var(--red);}
+</style>
+</head>
+<body>
+
+<div class="login" id="loginScreen">
+  <div class="login-box">
+    <h1>ASCENT PRACTICE<br>アナリティクス</h1>
+    <input type="password" id="pwInput" placeholder="パスワード">
+    <button onclick="doLogin()">ログイン</button>
+    <div class="error" id="loginError">パスワードが違います</div>
+  </div>
+</div>
+
+<div class="dash" id="dashScreen">
+  <div class="dash-header">
+    <h1>PRACTICE ANALYTICS</h1>
+    <select id="rangeSelect" onchange="loadData()">
+      <option value="1">今日</option>
+      <option value="7" selected>7日間</option>
+      <option value="30">30日間</option>
+    </select>
+  </div>
+
+  <a class="nav-link" href="analytics.html">← LP アナリティクスを見る</a>
+
+  <div class="tab-bar">
+    <button class="active" onclick="switchTab('overview',this)">概要</button>
+    <button onclick="switchTab('features',this)">機能別</button>
+    <button onclick="switchTab('diagnosis',this)">AI診断</button>
+    <button onclick="switchTab('plans',this)">プラン別</button>
+  </div>
+
+  <div id="content"><div class="loading">読み込み中...</div></div>
+</div>
+
+<script>
+var API = 'https://ascent-analytics.moriki-beaters.workers.dev/api/data';
+var password = '';
+var rawData = {};
+
+function doLogin(){
+  password = document.getElementById('pwInput').value;
+  fetch(API + '?pw=' + encodeURIComponent(password) + '&range=1')
+    .then(function(r){
+      if(r.status === 401){ document.getElementById('loginError').style.display='block'; return; }
+      document.getElementById('loginScreen').style.display='none';
+      document.getElementById('dashScreen').style.display='block';
+      loadData();
+    });
+}
+document.getElementById('pwInput').addEventListener('keydown',function(e){ if(e.key==='Enter') doLogin(); });
+
+function loadData(){
+  var range = document.getElementById('rangeSelect').value;
+  document.getElementById('content').innerHTML = '<div class="loading">読み込み中...</div>';
+  fetch(API + '?pw=' + encodeURIComponent(password) + '&range=' + range)
+    .then(function(r){ return r.json(); })
+    .then(function(data){ rawData = data; switchTab('overview', document.querySelector('.tab-bar button.active')); });
+}
+
+function switchTab(tab, btn){
+  document.querySelectorAll('.tab-bar button').forEach(function(b){ b.classList.remove('active'); });
+  if(btn) btn.classList.add('active');
+  var el = document.getElementById('content');
+  var merged = mergeData(rawData);
+  if(!merged){ el.innerHTML = '<div class="empty">データがまだありません。<br>Practice にアクセスがあると表示されます。</div>'; return; }
+  if(tab === 'overview') el.innerHTML = renderOverview(merged);
+  if(tab === 'features') el.innerHTML = renderFeatures(merged);
+  if(tab === 'diagnosis') el.innerHTML = renderDiagnosis(merged);
+  if(tab === 'plans') el.innerHTML = renderPlans(merged);
+}
+
+function mergeData(data){
+  var days = Object.keys(data);
+  if(days.length === 0) return null;
+  var m = {
+    practice_visits: 0, trial_visits: 0,
+    practice_feature_starts: {}, practice_feature_completes: {},
+    practice_difficulty: {}, practice_plans: {},
+    trial_diagnosis_starts: 0,
+    trial_diagnosis_results: { success: 0, fail: 0, engines: {} },
+    daily: {}
+  };
+  days.forEach(function(d){
+    var day = data[d];
+    m.practice_visits += (day.practice_visits || 0);
+    m.trial_visits += (day.trial_visits || 0);
+    m.trial_diagnosis_starts += (day.trial_diagnosis_starts || 0);
+    m.daily[d] = { practice: day.practice_visits || 0, trial: day.trial_visits || 0 };
+
+    Object.keys(day.practice_feature_starts || {}).forEach(function(k){
+      m.practice_feature_starts[k] = (m.practice_feature_starts[k]||0) + day.practice_feature_starts[k];
+    });
+    Object.keys(day.practice_feature_completes || {}).forEach(function(k){
+      m.practice_feature_completes[k] = (m.practice_feature_completes[k]||0) + day.practice_feature_completes[k];
+    });
+    Object.keys(day.practice_difficulty || {}).forEach(function(k){
+      m.practice_difficulty[k] = (m.practice_difficulty[k]||0) + day.practice_difficulty[k];
+    });
+    Object.keys(day.practice_plans || {}).forEach(function(k){
+      m.practice_plans[k] = (m.practice_plans[k]||0) + day.practice_plans[k];
+    });
+
+    var dr = day.trial_diagnosis_results || {};
+    m.trial_diagnosis_results.success += (dr.success || 0);
+    m.trial_diagnosis_results.fail += (dr.fail || 0);
+    Object.keys(dr.engines || {}).forEach(function(k){
+      m.trial_diagnosis_results.engines[k] = (m.trial_diagnosis_results.engines[k]||0) + dr.engines[k];
+    });
+  });
+  return m;
+}
+
+function renderOverview(d){
+  var totalSessions = (d.practice_feature_starts['drill']||0) + (d.practice_feature_starts['reaction']||0);
+  var html = '<div class="card"><div class="card-title">アクセス概要</div>';
+  html += statRow('Practice 訪問数', d.practice_visits, 'gold');
+  html += statRow('AI診断（trial）訪問数', d.trial_visits, 'gold');
+  html += statRow('トレーニング総セッション数', totalSessions);
+  html += statRow('AI診断 開始数', d.trial_diagnosis_starts);
+  html += '</div>';
+
+  var sortedDays = Object.keys(d.daily).sort();
+  if(sortedDays.length > 1){
+    html += '<div class="card"><div class="card-title">日別アクセス推移</div>';
+    var maxVal = Math.max.apply(null, sortedDays.map(function(k){ return (d.daily[k].practice||0) + (d.daily[k].trial||0); }));
+    sortedDays.forEach(function(day){
+      var pv = d.daily[day].practice||0;
+      var tv = d.daily[day].trial||0;
+      var total = pv + tv;
+      var pct = maxVal > 0 ? Math.round(total/maxVal*100) : 0;
+      var dateLabel = day.replace(/^\d{4}-/,'');
+      html += '<div class="bar-container"><div class="bar-label"><span>' + dateLabel + '</span><span>Practice:' + pv + ' / 診断:' + tv + '</span></div><div class="bar-bg"><div class="bar-fill gold" style="width:' + pct + '%"></div></div></div>';
+    });
+    html += '</div>';
+  }
+
+  return html;
+}
+
+function renderFeatures(d){
+  var features = [
+    { key: 'drill', label: 'ドリルトレーニング' },
+    { key: 'reaction', label: 'リアクショントレーニング' }
+  ];
+
+  var html = '<div class="card"><div class="card-title">機能別 開始数・完了率</div>';
+  var hasAny = false;
+  features.forEach(function(f){
+    var starts = d.practice_feature_starts[f.key] || 0;
+    var completes = d.practice_feature_completes[f.key] || 0;
+    if(starts === 0) return;
+    hasAny = true;
+    var rate = Math.round(completes/starts*100);
+    html += '<div style="margin-bottom:16px;">';
+    html += '<div style="font-size:13px;font-weight:600;margin-bottom:6px;">' + f.label + '</div>';
+    html += statRow('開始数', starts);
+    html += statRow('完了数', completes);
+    html += statRow('完了率', rate + '%', rate >= 70 ? 'green' : rate >= 40 ? 'gold' : 'red');
+    html += '</div>';
+  });
+  if(!hasAny) html += '<div class="empty" style="padding:20px 0;">機能利用データなし</div>';
+  html += '</div>';
+
+  var diffData = d.practice_difficulty;
+  if(Object.keys(diffData).length > 0){
+    html += '<div class="card"><div class="card-title">難易度分布</div>';
+    var diffLabels = { 'drill:mode1':'ドリル MODE1', 'drill:mode2':'ドリル MODE2', 'drill:mode3':'ドリル MODE3', 'drill:mode4':'ドリル MODE4', 'reaction:normal':'リアクション NORMAL', 'reaction:hard':'リアクション HARD', 'reaction:elite':'リアクション ELITE' };
+    var total = Object.values(diffData).reduce(function(a,b){return a+b;},0);
+    var maxDiff = Math.max.apply(null, Object.values(diffData));
+    Object.keys(diffData).sort(function(a,b){return diffData[b]-diffData[a];}).forEach(function(k){
+      var count = diffData[k];
+      var pct = Math.round(count/maxDiff*100);
+      var share = total > 0 ? Math.round(count/total*100) : 0;
+      html += '<div class="bar-container"><div class="bar-label"><span>' + (diffLabels[k]||k) + '</span><span>' + count + '回 (' + share + '%)</span></div><div class="bar-bg"><div class="bar-fill blue" style="width:' + pct + '%"></div></div></div>';
+    });
+    html += '</div>';
+  }
+
+  return html;
+}
+
+function renderDiagnosis(d){
+  var starts = d.trial_diagnosis_starts;
+  var successes = d.trial_diagnosis_results.success;
+  var fails = d.trial_diagnosis_results.fail;
+  var total = successes + fails;
+  var successRate = total > 0 ? Math.round(successes/total*100) : 0;
+
+  var html = '<div class="card"><div class="card-title">AI骨格診断 実績</div>';
+  html += statRow('診断開始数', starts, 'gold');
+  html += statRow('解析成功数', successes, 'green');
+  html += statRow('解析失敗数', fails, fails > 0 ? 'red' : '');
+  html += statRow('成功率', successRate + '%', successRate >= 80 ? 'green' : successRate >= 50 ? 'gold' : 'red');
+  html += '</div>';
+
+  var engines = d.trial_diagnosis_results.engines;
+  if(Object.keys(engines).length > 0){
+    html += '<div class="card"><div class="card-title">エンジン別 使用回数</div>';
+    var engMax = Math.max.apply(null, Object.values(engines));
+    Object.keys(engines).sort(function(a,b){return engines[b]-engines[a];}).forEach(function(e){
+      var pct = Math.round(engines[e]/engMax*100);
+      var label = e === 'gemini' ? 'Gemini（通常）' : e === 'claude' ? 'Claude（比較）' : e;
+      html += '<div class="bar-container"><div class="bar-label"><span>' + label + '</span><span>' + engines[e] + '回</span></div><div class="bar-bg"><div class="bar-fill gold" style="width:' + pct + '%"></div></div></div>';
+    });
+    html += '</div>';
+  }
+
+  return html;
+}
+
+function renderPlans(d){
+  var plans = d.practice_plans;
+  if(Object.keys(plans).length === 0) return '<div class="empty">プランデータなし</div>';
+
+  var planLabels = { 'free':'無料（フリー）', 'lite':'LITE', 'unleash':'UNLEASH', 'pro':'PRO' };
+  var total = Object.values(plans).reduce(function(a,b){return a+b;},0);
+  var maxPlan = Math.max.apply(null, Object.values(plans));
+
+  var html = '<div class="card"><div class="card-title">プラン別 トレーニング開始数</div>';
+  ['free','lite','unleash','pro'].forEach(function(p){
+    var count = plans[p] || 0;
+    if(count === 0) return;
+    var pct = Math.round(count/maxPlan*100);
+    var share = total > 0 ? Math.round(count/total*100) : 0;
+    html += '<div class="bar-container"><div class="bar-label"><span>' + (planLabels[p]||p) + '</span><span>' + count + '回 (' + share + '%)</span></div><div class="bar-bg"><div class="bar-fill gold" style="width:' + pct + '%"></div></div></div>';
+  });
+  html += '</div>';
+  return html;
+}
+
+function statRow(label, value, cls){
+  return '<div class="stat-row"><span class="stat-label">' + label + '</span><span class="stat-value' + (cls ? ' '+cls : '') + '">' + value + '</span></div>';
+}
+</script>
+</body>
+</html>

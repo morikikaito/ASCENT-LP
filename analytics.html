@@ -190,6 +190,33 @@ function renderOverview(d){
   return html;
 }
 
+var SECTION_LABELS = {
+  'hero': 'ファーストビュー',
+  'empathy': '共感セクション',
+  'journey': 'ストーリー',
+  'problem': '課題提起',
+  'indicators': '3指標',
+  'solution': '解決策（3本柱）',
+  'cta-1': 'CTA（1箇所目）',
+  'cta-2': 'CTA（2箇所目）',
+  'cta-3': 'CTA（3箇所目）',
+  'how-it-works': '利用ステップ',
+  'value-stack': '価値比較',
+  'credibility': '信頼性',
+  'parents': '保護者向け',
+  'position': 'ポジション別',
+  'faq': 'よくある質問',
+  'plans': 'プラン一覧',
+  'stage-design': 'ステージ設計',
+  'root-cause': '原因分析',
+  'testimonials': '体験者の声',
+  'limited': '限定オファー',
+  'risk-free': '返金保証',
+  'data': 'データ根拠'
+};
+
+function sectionLabel(name){ return SECTION_LABELS[name] || name; }
+
 function renderSections(d){
   var pages = ['main_lp', 'buy_lp'];
   var html = '';
@@ -211,7 +238,7 @@ function renderSections(d){
       var pct = maxViews > 0 ? Math.round(count / maxViews * 100) : 0;
       var dwellKey = page + ':' + name;
       var avgDwell = avg(d.section_dwells[dwellKey]);
-      html += '<div class="bar-container"><div class="bar-label"><span>' + name + '</span><span>' + count + '回 / 平均' + avgDwell + '秒</span></div><div class="bar-bg"><div class="bar-fill gold" style="width:' + pct + '%"></div></div></div>';
+      html += '<div class="bar-container"><div class="bar-label"><span>' + sectionLabel(name) + '</span><span>' + count + '回 / 平均' + avgDwell + '秒</span></div><div class="bar-bg"><div class="bar-fill gold" style="width:' + pct + '%"></div></div></div>';
     });
     html += '</div>';
   });
