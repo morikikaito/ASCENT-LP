@@ -939,14 +939,14 @@ trackEvent('page_view', {});
   }
 })();
 
-// 48h Countdown Timer
-// ★公開時にこの日時を変更する（日本時間）★
-// 例: 2026年4月15日 21:00に公開する場合 → '2026-04-15T21:00:00+09:00'
-var CAMPAIGN_START = '2099-12-31T23:59:59+09:00';
+// Phase 1.5 Countdown Timer (段階切替)
+var CAMPAIGN_START = '2026-04-17T22:30:00+09:00';
+var PHASE_SWITCH = new Date('2026-04-18T21:15:00+09:00');
+var DEADLINE_PHASE_1 = new Date('2026-04-18T22:20:00+09:00');
+var DEADLINE_PHASE_2 = new Date('2026-04-19T22:20:00+09:00');
 
 (function(){
   var startDate = new Date(CAMPAIGN_START);
-  var endDate = new Date(startDate.getTime() + 48 * 60 * 60 * 1000);
 
   function updateTimer(){
     var now = new Date();
@@ -957,16 +957,18 @@ var CAMPAIGN_START = '2099-12-31T23:59:59+09:00';
       return;
     }
 
+    var endDate = (now < PHASE_SWITCH) ? DEADLINE_PHASE_1 : DEADLINE_PHASE_2;
     var diff = endDate - now;
     if(diff <= 0){
       els.forEach(function(el){ el.textContent = 'この先行予約は終了しました'; });
       return;
     }
 
-    var h = Math.floor(diff / 3600000);
+    var days = Math.floor(diff / 86400000);
+    var h = Math.floor((diff % 86400000) / 3600000);
     var m = Math.floor((diff % 3600000) / 60000);
     var s = Math.floor((diff % 60000) / 1000);
-    var t = '残り ' + h + '時間 ' + ('0'+m).slice(-2) + '分 ' + ('0'+s).slice(-2) + '秒';
+    var t = '締切まで 残り ' + days + '日 ' + h + '時間 ' + m + '分 ' + s + '秒';
     els.forEach(function(el){ el.textContent = t; });
   }
 
