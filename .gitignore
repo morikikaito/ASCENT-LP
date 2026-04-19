@@ -1,0 +1,17 @@
+# Secrets & environment
+.env
+.env.*
+.dev.vars
+*.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Backups
+*.backup_*
+
+# Editor
+*.swp
+*.swo
+*~
